@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="dsORC">
+  <ConnectionProperties>
+    <Extension>OLEDB</Extension>
+    <ConnectString>Provider=OraOLEDB.Oracle.1;Data Source=IASCONV.BCGOV</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>ef805682-55ea-4f16-9d00-33f93945ecf3</DataSourceID>
+</RptDataSource>
