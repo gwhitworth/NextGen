@@ -116,6 +116,100 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="qryValueDetail">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <CommandText>WITH cteValueDetail([GroupName], 
+                    [PC], 
+                    [ExTx], 
+                    Value, 
+                    [Override Value], 
+                    [Actual Land Value], 
+                    [Actual Impr Value], 
+                    [Assessed Land Value], 
+                    [Assessed Impr Value])
+     AS (SELECT '2020 Actual Land', 
+                '06', 
+                '00', 
+                183474, 
+                NULL, 
+                268514, 
+                0, 
+                0, 
+                0
+         UNION
+         SELECT '2020 Actual Improvement', 
+                '06', 
+                '00', 
+                183474, 
+                NULL, 
+                0, 
+                183474, 
+                0, 
+                0
+         UNION
+         SELECT '2019 Assessed Land', 
+                '06', 
+                '00', 
+                268000, 
+                NULL, 
+                0, 
+                0, 
+                268000, 
+                0
+         UNION
+         SELECT '2019 Assessed Improvement', 
+                '06', 
+                '00', 
+                183000, 
+                NULL, 
+                0, 
+                0, 
+                0, 
+                183000)
+     SELECT *
+     FROM [cteValueDetail]
+     ORDER BY [GroupName] DESC;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="GroupName">
+          <DataField>GroupName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PC">
+          <DataField>PC</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ExTx">
+          <DataField>ExTx</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Value">
+          <DataField>Value</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Override_Value">
+          <DataField>Override Value</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Actual_Land_Value">
+          <DataField>Actual Land Value</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Actual_Impr_Value">
+          <DataField>Actual Impr Value</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Assessed_Land_Value">
+          <DataField>Assessed Land Value</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Assessed_Impr_Value">
+          <DataField>Assessed Impr Value</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -141,6 +235,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
+                <Top>0.01042in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <Style>
@@ -171,7 +267,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>0.42083in</Top>
+                <Top>0.43125in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>1</ZIndex>
@@ -203,7 +300,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>0.2in</Top>
+                <Top>0.21042in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>2</ZIndex>
@@ -235,7 +333,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>0.64583in</Top>
+                <Top>0.65625in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>3</ZIndex>
@@ -267,7 +366,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>0.86333in</Top>
+                <Top>0.87375in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>4</ZIndex>
@@ -299,7 +399,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.06333in</Top>
+                <Top>1.07375in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>5</ZIndex>
@@ -331,7 +432,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.67875in</Top>
+                <Top>1.68917in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>6</ZIndex>
@@ -363,7 +465,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.2619in</Top>
+                <Top>1.27232in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>7</ZIndex>
@@ -395,10 +498,10 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.45087in</Top>
-                <Left>1.97917in</Left>
+                <Top>1.46129in</Top>
+                <Left>1.75834in</Left>
                 <Height>0.2in</Height>
-                <Width>0.54166in</Width>
+                <Width>0.56249in</Width>
                 <ZIndex>8</ZIndex>
                 <Style>
                   <Border>
@@ -428,7 +531,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.89375in</Top>
+                <Top>1.90417in</Top>
+                <Left>0.05in</Left>
                 <Height>0.2in</Height>
                 <Width>0.77083in</Width>
                 <ZIndex>9</ZIndex>
@@ -460,16 +564,15 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Left>0.78438in</Left>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>10</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -493,16 +596,15 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
                 <Top>0.2in</Top>
-                <Left>0.78438in</Left>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>11</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -526,16 +628,15 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
                 <Top>0.64583in</Top>
-                <Left>0.78438in</Left>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>12</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -559,16 +660,15 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
                 <Top>0.42083in</Top>
-                <Left>0.78438in</Left>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>13</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -591,17 +691,16 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.06333in</Top>
-                <Left>0.78438in</Left>
+                <Top>1.07375in</Top>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>14</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -624,17 +723,16 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.2619in</Top>
-                <Left>0.78438in</Left>
+                <Top>1.27232in</Top>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>15</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -657,17 +755,16 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.67875in</Top>
-                <Left>0.78438in</Left>
+                <Top>1.68917in</Top>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>16</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -690,17 +787,16 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.89375in</Top>
-                <Left>0.78438in</Left>
+                <Top>1.90417in</Top>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>17</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -712,7 +808,7 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>?????</Value>
+                        <Value EvaluationMode="Constant">??</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -723,8 +819,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Top>1.45087in</Top>
-                <Left>2.53438in</Left>
+                <Top>1.46129in</Top>
+                <Left>2.33438in</Left>
                 <Height>0.2in</Height>
                 <Width>0.27083in</Width>
                 <ZIndex>18</ZIndex>
@@ -733,7 +829,6 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
@@ -757,28 +852,28 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraphs>
                 <rd:DefaultName>Textbox5</rd:DefaultName>
                 <Top>0.86641in</Top>
-                <Left>0.78438in</Left>
+                <Left>0.83438in</Left>
                 <Height>0.2in</Height>
-                <Width>2.02083in</Width>
+                <Width>1.77083in</Width>
                 <ZIndex>19</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
                   </Border>
                   <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
                   <PaddingTop>2pt</PaddingTop>
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Left>0in</Left>
-            <Height>3.65834in</Height>
-            <Width>2.81771in</Width>
+            <Top>0.07708in</Top>
+            <Left>0.01118in</Left>
+            <Height>3.66876in</Height>
+            <Width>2.60521in</Width>
             <Style>
               <Border>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
             </Style>
           </Rectangle>
@@ -1302,13 +1397,14 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Left>2.81666in</Left>
+            <Top>0.07708in</Top>
+            <Left>2.69034in</Left>
             <Height>3.65834in</Height>
-            <Width>2.04018in</Width>
+            <Width>2.04017in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
             </Style>
           </Rectangle>
@@ -2434,13 +2530,14 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Left>4.8491in</Left>
+            <Top>0.07708in</Top>
+            <Left>4.79778in</Left>
             <Height>3.65834in</Height>
             <Width>2.87247in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
             </Style>
           </Rectangle>
@@ -3485,14 +3582,18 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Left>7.7232in</Left>
+            <Top>0.07708in</Top>
+            <Left>7.73438in</Left>
             <Height>3.65834in</Height>
             <Width>2.74702in</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
+              <RightBorder>
+                <Style>Solid</Style>
+              </RightBorder>
             </Style>
           </Rectangle>
           <Textbox Name="Textbox127">
@@ -3514,8 +3615,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>3.69813in</Top>
-            <Left>0in</Left>
+            <Top>4.19813in</Top>
+            <Left>0.01118in</Left>
             <Height>0.19042in</Height>
             <Width>0.44792in</Width>
             <ZIndex>4</ZIndex>
@@ -3530,8 +3631,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
             </Style>
           </Textbox>
           <Line Name="Line1">
-            <Top>3.68833in</Top>
-            <Left>0in</Left>
+            <Top>4.18833in</Top>
+            <Left>0.01118in</Left>
             <Height>0in</Height>
             <Width>10.47022in</Width>
             <ZIndex>5</ZIndex>
@@ -3949,9 +4050,9 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 <Value>=Fields!Document_Number.Value</Value>
               </SortExpression>
             </SortExpressions>
-            <Top>3.90917in</Top>
-            <Left>0in</Left>
-            <Height>0.41667in</Height>
+            <Top>4.40917in</Top>
+            <Left>0.01118in</Left>
+            <Height>0.41666in</Height>
             <Width>5.87375in</Width>
             <ZIndex>6</ZIndex>
             <Style>
@@ -3967,8 +4068,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
             </Style>
           </Tablix>
           <Line Name="Line2">
-            <Top>4.40187in</Top>
-            <Left>0.00693in</Left>
+            <Top>4.90187in</Top>
+            <Left>0.01811in</Left>
             <Height>0in</Height>
             <Width>10.47022in</Width>
             <ZIndex>7</ZIndex>
@@ -3999,7 +4100,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>4.40885in</Top>
+            <Top>4.90885in</Top>
+            <Left>0.01118in</Left>
             <Height>0.20795in</Height>
             <Width>2.11459in</Width>
             <ZIndex>8</ZIndex>
@@ -4293,8 +4395,9 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 <Direction>Descending</Direction>
               </SortExpression>
             </SortExpressions>
-            <Top>4.62375in</Top>
-            <Height>0.625in</Height>
+            <Top>5.12375in</Top>
+            <Left>0.01118in</Left>
+            <Height>0.62499in</Height>
             <Width>2in</Width>
             <ZIndex>9</ZIndex>
             <Style>
@@ -4303,14 +4406,587 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               </Border>
             </Style>
           </Tablix>
+          <Tablix Name="Tablix1">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.76042in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.19792in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox139">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!GroupName.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox139</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>5pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>5</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.17708in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox130">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>PC</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox130</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox131">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>ExTx</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox131</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox132">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox132</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox114">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Override Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox114</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox116">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=SWITCH(Fields!GroupName.Value = "2020 Actual Land", "Actual Land Value",
+Fields!GroupName.Value = "2020 Actual Improvement", "Actual Impr Value",
+Fields!GroupName.Value = "2019 Assessed Land", "Assessed Land Value",
+Fields!GroupName.Value = "2019 Assessed Improvement", "Assessed Impr Value")</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox116</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.16667in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="PC">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!PC.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>PC</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="ExTx">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ExTx.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>ExTx</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Value1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Value.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <Format>C0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Value1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Override_Value">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Override_Value.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Override_Value</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Actual_Land_Value">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=SWITCH(Fields!GroupName.Value = "2020 Actual Land", Fields!Actual_Land_Value.Value,
+Fields!GroupName.Value = "2020 Actual Improvement", Fields!Actual_Impr_Value.Value,
+Fields!GroupName.Value = "2019 Assessed Land", Fields!Assessed_Land_Value.Value,
+Fields!GroupName.Value = "2019 Assessed Improvement", Fields!Assessed_Impr_Value.Value)</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <Format>C0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Actual_Land_Value</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="GroupName">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!GroupName.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!GroupName.Value</Value>
+                      <Direction>Descending</Direction>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixMembers>
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
+                      <Group Name="Details1" />
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>qryValueDetail</DataSetName>
+            <Top>5.72667in</Top>
+            <Left>0.28077in</Left>
+            <Height>0.54167in</Height>
+            <Width>5.76042in</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Line Name="Line3">
+            <Top>3.92778in</Top>
+            <Left>0.01118in</Left>
+            <Height>0in</Height>
+            <Width>7.73833in</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line4">
+            <Top>0.00917in</Top>
+            <Height>0in</Height>
+            <Width>10.4814in</Width>
+            <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line6">
+            <Top>0.075in</Top>
+            <Left>0.01118in</Left>
+            <Height>3.85278in</Height>
+            <Width>0in</Width>
+            <ZIndex>13</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line7">
+            <Top>0.07708in</Top>
+            <Left>2.66264in</Left>
+            <Height>3.85278in</Height>
+            <Width>0in</Width>
+            <ZIndex>14</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line8">
+            <Top>0.07708in</Top>
+            <Left>4.76785in</Left>
+            <Height>3.85278in</Height>
+            <Width>0in</Width>
+            <ZIndex>15</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line9">
+            <Top>0.07708in</Top>
+            <Left>7.70535in</Left>
+            <Height>3.85278in</Height>
+            <Width>0in</Width>
+            <ZIndex>16</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
         </ReportItems>
-        <Height>6.00813in</Height>
+        <Height>6.26833in</Height>
         <Style />
       </Body>
-      <Width>10.48407in</Width>
+      <Width>10.50993in</Width>
       <Page>
         <PageHeader>
-          <Height>0.25in</Height>
+          <Height>0.26167in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -4332,6 +5008,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox122</rd:DefaultName>
+              <Top>0.01167in</Top>
+              <Left>0.01118in</Left>
               <Height>0.22in</Height>
               <Width>1.125in</Width>
               <Style>
@@ -4362,7 +5040,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox122</rd:DefaultName>
-              <Left>2.28438in</Left>
+              <Top>0.01167in</Top>
+              <Left>2.29556in</Left>
               <Height>0.22in</Height>
               <Width>1.5in</Width>
               <ZIndex>1</ZIndex>
@@ -4394,7 +5073,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox122</rd:DefaultName>
-              <Left>5.47365in</Left>
+              <Top>0.01167in</Top>
+              <Left>5.48483in</Left>
               <Height>0.22in</Height>
               <Width>1.09375in</Width>
               <ZIndex>2</ZIndex>
@@ -4426,7 +5106,8 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox122</rd:DefaultName>
-              <Left>7.07574in</Left>
+              <Top>0.01167in</Top>
+              <Left>7.08692in</Left>
               <Height>0.22in</Height>
               <Width>1.125in</Width>
               <ZIndex>3</ZIndex>
@@ -4447,9 +5128,42 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
+                      <Value>=Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
                       <Style>
                         <FontFamily>Arial</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox122</rd:DefaultName>
+              <Left>10.11298in</Left>
+              <Height>0.22in</Height>
+              <Width>0.34551in</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Bottom</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox129">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value EvaluationMode="Constant">Page</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -4459,18 +5173,15 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox122</rd:DefaultName>
-              <Left>8.60907in</Left>
+              <Left>9.64248in</Left>
               <Height>0.22in</Height>
-              <Width>1.875in</Width>
-              <ZIndex>4</ZIndex>
+              <Width>0.42537in</Width>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <VerticalAlign>Bottom</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>
@@ -4490,7 +5201,7 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               <Value>BCAlogo2</Value>
               <Sizing>FitProportional</Sizing>
               <Top>0.01389in</Top>
-              <Left>0.01042in</Left>
+              <Left>0.0216in</Left>
               <Height>0.37153in</Height>
               <Width>2.35069in</Width>
               <Style>
@@ -4507,7 +5218,9 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                   <TextRuns>
                     <TextRun>
                       <Value>This information etc</Value>
-                      <Style />
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -4515,7 +5228,7 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>0.14917in</Top>
-              <Left>2.76958in</Left>
+              <Left>2.78076in</Left>
               <Height>0.25in</Height>
               <Width>2.10417in</Width>
               <ZIndex>1</ZIndex>
@@ -4536,8 +5249,46 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Run Date " + Today()</Value>
-                      <Style />
+                      <Value>=Format(Globals!ExecutionTime,"dd-mm-yyyy hh:mm tt")</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Left>9.32243in</Left>
+              <Height>0.25in</Height>
+              <Width>1.1875in</Width>
+              <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox37">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value EvaluationMode="Constant">Run Date</Value>
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -4546,11 +5297,10 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.13875in</Top>
-              <Left>8.43625in</Left>
+              <Left>8.72931in</Left>
               <Height>0.25in</Height>
-              <Width>1.92708in</Width>
-              <ZIndex>2</ZIndex>
+              <Width>0.61458in</Width>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -4568,10 +5318,9 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
             </Border>
           </Style>
         </PageFooter>
-        <PageHeight>8in</PageHeight>
+        <PageHeight>8.5in</PageHeight>
         <PageWidth>11in</PageWidth>
         <LeftMargin>0.05in</LeftMargin>
-        <RightMargin>0.05in</RightMargin>
         <TopMargin>0.05in</TopMargin>
         <BottomMargin>0.05in</BottomMargin>
         <Style />
