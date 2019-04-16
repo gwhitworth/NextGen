@@ -768,379 +768,403 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
                 'Quantity', 
                 NULL
          UNION
-         SELECT 2, 
+         SELECT 1, 
                 'Constant', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 3, 
+         SELECT 1, 
                 'Constant', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 4, 
+         SELECT 1, 
                 'Constant', 
                 4, 
                 'Amount', 
                 50109
          UNION
-         SELECT 5, 
+         SELECT 2, 
                 'First Floor Area', 
                 1, 
                 'Quantity', 
                 1766
          UNION
-         SELECT 6, 
+         SELECT 2, 
                 'First Floor Area', 
                 2, 
                 'Rate', 
                 42.47
          UNION
-         SELECT 7, 
+         SELECT 2, 
                 'First Floor Area', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 8, 
+         SELECT 2, 
                 'First Floor Area', 
                 4, 
                 'Amount', 
                 75002
          UNION
-         SELECT 9, 
+         SELECT 3, 
                 'Second Floor Area', 
                 1, 
                 'Quantity', 
                 741
          UNION
-         SELECT 10, 
+         SELECT 3, 
                 'Second Floor Area', 
                 2, 
                 'Rate', 
                 33.39
          UNION
-         SELECT 11, 
+         SELECT 3, 
                 'Second Floor Area', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 12, 
+         SELECT 3, 
                 'Second Floor Area', 
                 4, 
                 'Amount', 
                 24742
          UNION
-         SELECT 13, 
+         SELECT 4, 
                 'Foundation Constant - Crawl Space', 
                 1, 
                 'Quantity', 
                 NULL
          UNION
-         SELECT 14, 
+         SELECT 4, 
                 'Foundation Constant - Crawl Space', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 15, 
+         SELECT 4, 
                 'Foundation Constant - Crawl Space', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 16, 
+         SELECT 4, 
                 'Foundation Constant - Crawl Space', 
                 4, 
                 'Amount', 
                 11724
          UNION
-         SELECT 17, 
+         SELECT 5, 
                 'Crawl Space Area', 
                 1, 
                 'Quantity', 
                 1766
          UNION
-         SELECT 18, 
+         SELECT 5, 
                 'Crawl Space Area', 
                 2, 
                 'Rate', 
                 14.87
          UNION
-         SELECT 19, 
+         SELECT 5, 
                 'Crawl Space Area', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 20, 
-                'Crawl Space', 
+         SELECT 5, 
+                'Crawl Space Area', 
                 4, 
                 'Amount', 
                 26260
          UNION
-         SELECT 21, 
+         SELECT 6, 
                 'Subtotal applied to Total % Adj', 
                 1, 
                 'Quantity', 
                 NULL
          UNION
-         SELECT 22, 
+         SELECT 6, 
                 'Subtotal applied to Total % Adj', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 23, 
+         SELECT 6, 
                 'Subtotal applied to Total % Adj', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 24, 
+         SELECT 6, 
                 'Subtotal applied to Total % Adj', 
                 4, 
                 'Amount', 
                 187837
          UNION
-         SELECT 25, 
+         SELECT 7, 
                 'Heating - Elec Bboard', 
                 1, 
                 'Quantity', 
                 NULL
          UNION
-         SELECT 26, 
+         SELECT 7, 
                 'Heating - Elec Bboard', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 27, 
+         SELECT 7, 
                 'Heating - Elec Bboard', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 28, 
+         SELECT 7, 
                 'Heating - Elec Bboard', 
                 4, 
                 'Amount', 
                 NULL
          UNION
-         SELECT 29, 
+         SELECT 8, 
                 '    First Storey', 
                 1, 
                 'Quantity', 
                 1766
          UNION
-         SELECT 30, 
+         SELECT 8, 
                 '    First Storey', 
                 2, 
                 'Rate', 
                 1.65
          UNION
-         SELECT 31, 
+         SELECT 8, 
                 '    First Storey', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 32, 
+         SELECT 8, 
                 '    First Storey', 
                 4, 
                 'Amount', 
                 2914
          UNION
-         SELECT 33, 
+         SELECT 9, 
                 '    Second Storey', 
                 1, 
                 'Quantity', 
                 741
          UNION
-         SELECT 34, 
+         SELECT 9, 
                 '    Second Storey', 
                 2, 
                 'Rate', 
                 1.65
          UNION
-         SELECT 35, 
+         SELECT 9, 
                 '    Second Storey', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 36, 
+         SELECT 9, 
                 '    Second Storey', 
                 4, 
                 'Amount', 
                 1223
          UNION
-         SELECT 37, 
+         SELECT 10, 
                 'Plumbing                Full Bath', 
                 1, 
                 'Quantity', 
                 1
          UNION
-         SELECT 38, 
+         SELECT 10, 
                 'Plumbing                Full Bath', 
                 2, 
                 'Rate', 
                 4015
          UNION
-         SELECT 39, 
+         SELECT 10, 
                 'Plumbing                Full Bath', 
                 3, 
                 'Quality', 
                 3
          UNION
-         SELECT 40, 
+         SELECT 10, 
                 'Plumbing                Full Bath', 
                 4, 
                 'Amount', 
                 4015
          UNION
-         SELECT 41, 
+         SELECT 11, 
                 'Porch And Deck           Plywood Deck', 
                 1, 
                 'Quantity', 
                 219
          UNION
-         SELECT 42, 
+         SELECT 11, 
                 'Porch And Deck           Plywood Deck', 
                 2, 
                 'Rate', 
                 11.25
          UNION
-         SELECT 43, 
+         SELECT 11, 
                 'Porch And Deck           Plywood Deck', 
                 3, 
                 'Quality', 
                 3
          UNION
-         SELECT 44, 
+         SELECT 11, 
                 'Porch And Deck           Plywood Deck', 
                 4, 
                 'Amount', 
                 2464
          UNION
-         SELECT 45, 
+         SELECT 12, 
                 'Porch And Deck           2x4 Deck', 
                 1, 
                 'Quantity', 
                 200
          UNION
-         SELECT 46, 
+         SELECT 12, 
                 'Porch And Deck           2x4 Deck', 
                 2, 
                 'Rate', 
                 12.40
          UNION
-         SELECT 47, 
+         SELECT 12, 
                 'Porch And Deck           2x4 Deck', 
                 3, 
                 'Quality', 
                 3
          UNION
-         SELECT 48, 
+         SELECT 12, 
                 'Porch And Deck           2x4 Deck', 
                 4, 
                 'Amount', 
                 2480
          UNION
-         SELECT 49, 
+         SELECT 13, 
+                '', 
+                1, 
+                'Quantity', 
+                NULL
+         UNION
+         SELECT 13, 
+                '', 
+                2, 
+                'Rate', 
+                NULL
+         UNION
+         SELECT 13, 
+                '', 
+                3, 
+                'Quality', 
+                NULL
+         UNION
+         SELECT 13, 
+                '', 
+                4, 
+                'Amount', 
+                13095
+         UNION
+         SELECT 14, 
                 'Base MRC', 
                 1, 
                 'Quantity', 
                 NULL
          UNION
-         SELECT 50, 
+         SELECT 14, 
                 'Base MRC', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 51, 
+         SELECT 14, 
                 'Base MRC', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 52, 
+         SELECT 14, 
                 'Base MRC', 
                 4, 
                 'Amount', 
                 200933
          UNION
-         SELECT 53, 
+         SELECT 15, 
                 'Total % Adjusted', 
                 1, 
                 'Quantity', 
-                .10
+                .15
          UNION
-         SELECT 54, 
+         SELECT 14, 
                 'Total % Adjusted', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 55, 
+         SELECT 15, 
                 'Total % Adjusted', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 56, 
+         SELECT 15, 
                 'Total % Adjusted', 
                 4, 
                 'Amount', 
                 18184
          UNION
-         SELECT 57, 
+         SELECT 16, 
                 'Subtotal applied to % Complete', 
                 1, 
                 'Quantity', 
                 NULL
          UNION
-         SELECT 58, 
+         SELECT 16, 
                 'Subtotal applied to % Complete', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 59, 
+         SELECT 16, 
                 'Subtotal applied to % Complete', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 60, 
+         SELECT 16, 
                 'Subtotal applied to % Complete', 
                 4, 
                 'Amount', 
                 219716
          UNION
-         SELECT 61, 
+         SELECT 17, 
                 'MRC', 
                 1, 
                 'Quantity', 
                 NULL
          UNION
-         SELECT 62, 
+         SELECT 17, 
                 'MRC', 
                 2, 
                 'Rate', 
                 NULL
          UNION
-         SELECT 63, 
+         SELECT 17, 
                 'MRC', 
                 3, 
                 'Quality', 
                 NULL
          UNION
-         SELECT 64, 
+         SELECT 17, 
                 'MRC', 
                 4, 
                 'Amount', 
@@ -1169,6 +1193,476 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
         <Field Name="DataVal">
           <DataField>DataVal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryMRC_Detail">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <CommandText>WITH cte([Key], 
+         [RowDesc], 
+         [ColKey], 
+         [ColHead], 
+         [DataVal])
+     AS (SELECT 1, 
+                'Base MRC', 
+                1, 
+                'Value', 
+                200933
+         UNION
+         SELECT 1, 
+                'Base MRC', 
+                2, 
+                'Total', 
+                NULL
+         UNION
+         SELECT 2, 
+                'Total % Adj 10.00%', 
+                1, 
+                'Value', 
+                18784
+         UNION
+         SELECT 2, 
+                'Total % Adj 10.00%', 
+                2, 
+                'Total', 
+                NULL
+         UNION
+         SELECT 3, 
+                'MRC', 
+                1, 
+                'Value', 
+                NULL
+         UNION
+         SELECT 3, 
+                'MRC', 
+                2, 
+                'Total', 
+                219716
+         UNION
+         SELECT 4, 
+                'MACM', 
+                1, 
+                'Value', 
+                1.8
+         UNION
+         SELECT 4, 
+                'MACM', 
+                2, 
+                'Total', 
+                NULL
+         UNION
+         SELECT 5, 
+                'Market RCN', 
+                1, 
+                'Value', 
+                NULL
+         UNION
+         SELECT 5, 
+                'Market RCN', 
+                2, 
+                'Total', 
+                395490
+         UNION
+         SELECT 6, 
+                '     Effective Year', 
+                1, 
+                'Value', 
+                '1978'
+         UNION
+         SELECT 6, 
+                '     Effective Year', 
+                2, 
+                'Total', 
+                NULL
+         UNION
+         SELECT 7, 
+                '     Depreciation Table', 
+                1, 
+                'Value', 
+                -98
+         UNION
+         SELECT 7, 
+                '     Depreciation Table', 
+                2, 
+                'Total', 
+                NULL
+         UNION
+         SELECT 8, 
+                '     Total Depreciation', 
+                1, 
+                'Value', 
+                -99
+         UNION
+         SELECT 8, 
+                '     Total Depreciation', 
+                2, 
+                'Total', 
+                -138421
+         UNION
+         SELECT 9, 
+                'Market RCNLD', 
+                1, 
+                'Value', 
+                NULL
+         UNION
+         SELECT 9, 
+                'Market RCNLD', 
+                2, 
+                'Total', 
+                257068
+         UNION
+         SELECT 10, 
+                'Sub Total Applied to Market Modifier %', 
+                1, 
+                'Value', 
+                NULL
+         UNION
+         SELECT 10, 
+                'Sub Total Applied to Market Modifier %', 
+                2, 
+                'Total', 
+                257068
+         UNION
+         SELECT 11, 
+                'Market Adjusted RCNLD', 
+                1, 
+                'Value', 
+                NULL
+         UNION
+         SELECT 11, 
+                'Market Adjusted RCNLD', 
+                2, 
+                'Total', 
+                257068)
+     SELECT *
+     FROM cte
+     ORDER BY [KEY];</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Key">
+          <DataField>Key</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RowDesc">
+          <DataField>RowDesc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ColKey">
+          <DataField>ColKey</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ColHead">
+          <DataField>ColHead</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DataVal">
+          <DataField>DataVal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="qryAccomodation">
+      <Query>
+        <DataSourceName>EDW</DataSourceName>
+        <CommandText>WITH cte([Key], 
+         [RowDesc], 
+         [ColKey], 
+         [ColHead], 
+         [DataVal])
+     AS (SELECT 1, 
+                'Living Room', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 1, 
+                'Living Room', 
+                2, 
+                '1', 
+                1
+         UNION
+         SELECT 1, 
+                'Living Room', 
+                3, 
+                '2', 
+                NULL
+         UNION
+         SELECT 1, 
+                'Living Room', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 1, 
+                'Living Room', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 2, 
+                'Dining Area', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 2, 
+                'Dining Area', 
+                2, 
+                '1', 
+                1
+         UNION
+         SELECT 2, 
+                'Dining Area', 
+                3, 
+                '2', 
+                NULL
+         UNION
+         SELECT 2, 
+                'Dining Area', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 2, 
+                'Dining Area', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 3, 
+                'Kitchen', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 3, 
+                'Kitchen', 
+                2, 
+                '1', 
+                1
+         UNION
+         SELECT 3, 
+                'Kitchen', 
+                3, 
+                '2', 
+                NULL
+         UNION
+         SELECT 3, 
+                'Kitchen', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 3, 
+                'Kitchen', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 4, 
+                'Family / Rec', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 4, 
+                'Family / Rec', 
+                2, 
+                '1', 
+                1
+         UNION
+         SELECT 4, 
+                'Family / Rec', 
+                3, 
+                '2', 
+                NULL
+         UNION
+         SELECT 4, 
+                'Family / Rec', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 4, 
+                'Family / Rec', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 5, 
+                'Bedroom', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 5, 
+                'Bedroom', 
+                2, 
+                '1', 
+                2
+         UNION
+         SELECT 5, 
+                'Bedroom', 
+                3, 
+                '2', 
+                3
+         UNION
+         SELECT 5, 
+                'Bedroom', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 5, 
+                'Bedroom', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 6, 
+                'Utility Room', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 6, 
+                'Utility Room', 
+                2, 
+                '1', 
+                1
+         UNION
+         SELECT 6, 
+                'Utility Room', 
+                3, 
+                '2', 
+                NULL
+         UNION
+         SELECT 6, 
+                'Utility Room', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 6, 
+                'Utility Room', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 7, 
+                'Entry', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 7, 
+                'Entry', 
+                2, 
+                '1', 
+                1
+         UNION
+         SELECT 7, 
+                'Entry', 
+                3, 
+                '2', 
+                NULL
+         UNION
+         SELECT 7, 
+                'Entry', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 7, 
+                'Entry', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 8, 
+                'Full Bath', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 8, 
+                'Full Bath', 
+                2, 
+                '1', 
+                1
+         UNION
+         SELECT 8, 
+                'Full Bath', 
+                3, 
+                '2', 
+                1
+         UNION
+         SELECT 8, 
+                'Full Bath', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 8, 
+                'Full Bath', 
+                5, 
+                'A', 
+                NULL
+         UNION
+         SELECT 9, 
+                'Other', 
+                1, 
+                'B', 
+                NULL
+         UNION
+         SELECT 9, 
+                'Other', 
+                2, 
+                '1', 
+                NULL
+         UNION
+         SELECT 9, 
+                'Other', 
+                3, 
+                '2', 
+                1
+         UNION
+         SELECT 9, 
+                'Other', 
+                4, 
+                '3', 
+                NULL
+         UNION
+         SELECT 9, 
+                'Other', 
+                5, 
+                'A', 
+                NULL)
+     SELECT *
+     FROM cte
+     ORDER BY [KEY];</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Key">
+          <DataField>Key</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RowDesc">
+          <DataField>RowDesc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ColKey">
+          <DataField>ColKey</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ColHead">
+          <DataField>ColHead</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DataVal">
+          <DataField>DataVal</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -10378,7 +10872,7 @@ Fields!GroupName.Value = "2019 Assessed Improvement", Fields!Assessed_Impr_Value
             <Top>6.66813in</Top>
             <Left>0.01594in</Left>
             <Height>1.075in</Height>
-            <Width>10.91739in</Width>
+            <Width>10.91738in</Width>
             <ZIndex>17</ZIndex>
             <Style>
               <Border>
@@ -10976,7 +11470,7 @@ Fields!GroupName.Value = "2019 Assessed Improvement", Fields!Assessed_Impr_Value
             <Top>7.79729in</Top>
             <Left>9.41513in</Left>
             <Height>0.41666in</Height>
-            <Width>1.5182in</Width>
+            <Width>1.51819in</Width>
             <ZIndex>19</ZIndex>
             <Style>
               <Border>
@@ -12812,6 +13306,11 @@ Fields!GroupName.Value = "2019 Assessed Improvement", Fields!Assessed_Impr_Value
                                   <Value>=Sum(Fields!DataVal.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIf(
+Fields!Key.Value = 17
+ OR Fields!Key.Value = 13
+OR Fields!Key.Value = 6
+,  "Bold","Normal")</FontWeight>
                                     <Format>=SWITCH(Fields!ColKey.Value = 1 AND Fields!RowDesc.Value = "Total % Adjusted", "0.00%",
 Fields!ColKey.Value = 1 AND Fields!RowDesc.Value &lt;&gt; "Total % Adjusted", "#,0",
 Fields!ColKey.Value = 2, "#,0.00",
@@ -12963,6 +13462,11 @@ Fields!ColKey.Value = 4, "C0")</Format>
                                 <Value>=Fields!RowDesc.Value</Value>
                                 <Style>
                                   <FontSize>8pt</FontSize>
+                                  <FontWeight>=IIf(
+Fields!Key.Value = 17
+ OR Fields!Key.Value = 13
+OR Fields!Key.Value = 6
+,  "Bold","Normal")</FontWeight>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -13008,6 +13512,650 @@ Fields!ColKey.Value = 4, "C0")</Format>
               </BottomBorder>
             </Style>
           </Tablix>
+          <Tablix Name="Tablix15">
+            <TablixCorner>
+              <TablixCornerRows>
+                <TablixCornerRow>
+                  <TablixCornerCell>
+                    <CellContents>
+                      <Textbox Name="Textbox451">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>Detail</Value>
+                                <Style>
+                                  <FontFamily>Arial</FontFamily>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox448</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <BottomBorder>
+                            <Style>Solid</Style>
+                          </BottomBorder>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixCornerCell>
+                </TablixCornerRow>
+                <TablixCornerRow>
+                  <TablixCornerCell>
+                    <CellContents>
+                      <Textbox Name="Textbox452">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox447</rd:DefaultName>
+                        <Visibility>
+                          <Hidden>true</Hidden>
+                        </Visibility>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <TopBorder>
+                            <Style>Solid</Style>
+                          </TopBorder>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixCornerCell>
+                </TablixCornerRow>
+              </TablixCornerRows>
+            </TablixCorner>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>0.78887in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.20139in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="DataVal2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=SWITCH(
+Fields!Key.Value = 7 AND Fields!ColKey.Value = 1, "00CURVE80"
+,Fields!Key.Value = 8 AND Fields!ColKey.Value = 1, "35.00%"
+,true, Sum(Fields!DataVal.Value))</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIf(
+Fields!Key.Value = 11 
+OR Fields!Key.Value = 3
+OR Fields!Key.Value = 5
+OR Fields!Key.Value = 9
+,  "Bold","Normal")</FontWeight>
+                                    <Format>=SWITCH(Fields!ColKey.Value = 1 AND (Fields!Key.Value = 1 OR Fields!Key.Value = 2), "C0"
+, Fields!Key.Value = 6, "####"
+, Fields!ColKey.Value = 2, "C0")</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>DataVal</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.15208in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox450">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontFamily>Arial</FontFamily>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox449</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <BottomBorder>
+                            <Style>Solid</Style>
+                          </BottomBorder>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember>
+                      <Group Name="ColHead2">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!ColHead.Value</GroupExpression>
+                        </GroupExpressions>
+                      </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!ColKey.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
+                      <TablixHeader>
+                        <Size>0.03125in</Size>
+                        <CellContents>
+                          <Textbox Name="ColHead2">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value>=Fields!ColHead.Value</Value>
+                                    <Style>
+                                      <FontSize>8pt</FontSize>
+                                      <FontWeight>Bold</FontWeight>
+                                    </Style>
+                                  </TextRun>
+                                </TextRuns>
+                                <Style>
+                                  <TextAlign>Right</TextAlign>
+                                </Style>
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>ColHead</rd:DefaultName>
+                            <Visibility>
+                              <Hidden>true</Hidden>
+                            </Visibility>
+                            <Style>
+                              <Border>
+                                <Color>LightGrey</Color>
+                                <Style>None</Style>
+                              </Border>
+                              <PaddingLeft>2pt</PaddingLeft>
+                              <PaddingRight>2pt</PaddingRight>
+                              <PaddingTop>2pt</PaddingTop>
+                              <PaddingBottom>2pt</PaddingBottom>
+                            </Style>
+                          </Textbox>
+                        </CellContents>
+                      </TablixHeader>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="RowDesc2">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!RowDesc.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Key.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>2.68578in</Size>
+                    <CellContents>
+                      <Textbox Name="RowDesc2">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!RowDesc.Value</Value>
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>=IIf(
+Fields!Key.Value = 11 
+OR Fields!Key.Value = 3
+OR Fields!Key.Value = 5
+OR Fields!Key.Value = 9
+,  "Bold","Normal")</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>RowDesc</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>qryMRC_Detail</DataSetName>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!Key.Value</Value>
+              </SortExpression>
+              <SortExpression>
+                <Value>=Fields!ColKey.Value</Value>
+              </SortExpression>
+            </SortExpressions>
+            <Top>10.35146in</Top>
+            <Left>2.8567in</Left>
+            <Height>0.38472in</Height>
+            <Width>3.47464in</Width>
+            <ZIndex>26</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BottomBorder>
+                <Style>Solid</Style>
+              </BottomBorder>
+            </Style>
+          </Tablix>
+          <Tablix Name="Tablix16">
+            <TablixCorner>
+              <TablixCornerRows>
+                <TablixCornerRow>
+                  <TablixCornerCell>
+                    <CellContents>
+                      <Textbox Name="Textbox454">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>Accommodation</Value>
+                                <Style>
+                                  <FontFamily>Arial</FontFamily>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox448</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <BottomBorder>
+                            <Style>Solid</Style>
+                          </BottomBorder>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixCornerCell>
+                </TablixCornerRow>
+                <TablixCornerRow>
+                  <TablixCornerCell>
+                    <CellContents>
+                      <Textbox Name="Textbox455">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox447</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <TopBorder>
+                            <Style>Solid</Style>
+                          </TopBorder>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixCornerCell>
+                </TablixCornerRow>
+              </TablixCornerRows>
+            </TablixCorner>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>0.2491in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.20139in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="DataVal3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!DataVal.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>DataVal</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.19097in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox453">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontFamily>Arial</FontFamily>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox449</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <BottomBorder>
+                            <Style>Solid</Style>
+                          </BottomBorder>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember>
+                      <Group Name="ColHead3">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!ColHead.Value</GroupExpression>
+                        </GroupExpressions>
+                      </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!ColKey.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
+                      <TablixHeader>
+                        <Size>0.20139in</Size>
+                        <CellContents>
+                          <Textbox Name="ColHead3">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value>=Fields!ColHead.Value</Value>
+                                    <Style>
+                                      <FontSize>8pt</FontSize>
+                                      <FontWeight>Bold</FontWeight>
+                                    </Style>
+                                  </TextRun>
+                                </TextRuns>
+                                <Style>
+                                  <TextAlign>Center</TextAlign>
+                                </Style>
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>ColHead</rd:DefaultName>
+                            <Style>
+                              <Border>
+                                <Color>LightGrey</Color>
+                                <Style>None</Style>
+                              </Border>
+                              <PaddingLeft>2pt</PaddingLeft>
+                              <PaddingRight>2pt</PaddingRight>
+                              <PaddingTop>2pt</PaddingTop>
+                              <PaddingBottom>2pt</PaddingBottom>
+                            </Style>
+                          </Textbox>
+                        </CellContents>
+                      </TablixHeader>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="RowDesc3">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!RowDesc.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Key.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>1.11439in</Size>
+                    <CellContents>
+                      <Textbox Name="RowDesc3">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!RowDesc.Value</Value>
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>RowDesc</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>qryAccomodation</DataSetName>
+            <PageBreak>
+              <BreakLocation>End</BreakLocation>
+            </PageBreak>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!Key.Value</Value>
+              </SortExpression>
+              <SortExpression>
+                <Value>=Fields!ColKey.Value</Value>
+              </SortExpression>
+            </SortExpressions>
+            <Top>10.85146in</Top>
+            <Left>2.8567in</Left>
+            <Height>0.59375in</Height>
+            <Width>1.36349in</Width>
+            <ZIndex>27</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BottomBorder>
+                <Style>Solid</Style>
+              </BottomBorder>
+            </Style>
+          </Tablix>
+          <Textbox Name="Textbox170">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox168</rd:DefaultName>
+            <Top>6.91083in</Top>
+            <Left>4.9742in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>28</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>13.82166in</Height>
         <Style />
@@ -13281,7 +14429,7 @@ that it is current or accurate, and provides it for your convenience only. Use o
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(Globals!ExecutionTime,"dd-mm-yyyy hh:mm tt")</Value>
+                      <Value>=Format(Now(),"dd-MM-yyyy hh:mm tt")</Value>
                       <Style>
                         <FontFamily>Arial</FontFamily>
                         <FontSize>8pt</FontSize>
