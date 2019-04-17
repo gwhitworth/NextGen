@@ -3376,6 +3376,7 @@ FROM            IASTEST_IAS.PARDAT</CommandText>
             </TablixRowHierarchy>
             <DataSetName>qryMain</DataSetName>
             <Top>0.00792in</Top>
+            <Left>0.0125in</Left>
             <Height>2.55in</Height>
             <Width>10.9in</Width>
             <ZIndex>2</ZIndex>
