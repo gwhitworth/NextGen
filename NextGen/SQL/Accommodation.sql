@@ -133,13 +133,13 @@ WITH cte([Key],
                 'Bedroom', 
                 2, 
                 '1', 
-                1
+                2
          UNION
          SELECT 5, 
                 'Bedroom', 
                 3, 
                 '2', 
-                NULL
+                3
          UNION
          SELECT 5, 
                 'Bedroom', 
@@ -229,7 +229,7 @@ WITH cte([Key],
                 'Full Bath', 
                 3, 
                 '2', 
-                NULL
+                1
          UNION
          SELECT 8, 
                 'Full Bath', 
@@ -253,13 +253,13 @@ WITH cte([Key],
                 'Other', 
                 2, 
                 '1', 
-                1
+                NULL
          UNION
          SELECT 9, 
                 'Other', 
                 3, 
                 '2', 
-                NULL
+                1
          UNION
          SELECT 9, 
                 'Other', 
