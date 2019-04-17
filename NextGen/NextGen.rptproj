@@ -10,8 +10,48 @@
   <DataSets />
   <Reports>
     <ProjectItem>
+      <Name>PRC_CarPort_Sub.rdl</Name>
+      <FullPath>PRC_CarPort_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_GeoUnit_Sub.rdl</Name>
+      <FullPath>PRC_GeoUnit_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_LandCalc_Sub.rdl</Name>
+      <FullPath>PRC_LandCalc_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_MainBuilding_Sub.rdl</Name>
+      <FullPath>PRC_MainBuilding_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_MRC_Sub.rdl</Name>
+      <FullPath>PRC_MRC_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_Notes_Sub.rdl</Name>
+      <FullPath>PRC_Notes_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_PropPhoto_Sub.rdl</Name>
+      <FullPath>PRC_PropPhoto_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>PropertyReportCard.rdl</Name>
       <FullPath>PropertyReportCard.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_Servicing_Sub.rdl</Name>
+      <FullPath>PRC_Servicing_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_Value_Summary_Sub.rdl</Name>
+      <FullPath>PRC_Value_Summary_Sub.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PRC_Sales_Sub.rdl</Name>
+      <FullPath>PRC_Sales_Sub.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
