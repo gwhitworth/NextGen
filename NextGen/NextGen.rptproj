@@ -6,6 +6,10 @@
       <Name>IASCONV.rds</Name>
       <FullPath>IASCONV.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>BCA_COMMON.rds</Name>
+      <FullPath>BCA_COMMON.rds</FullPath>
+    </ProjectItem>
   </DataSources>
   <DataSets />
   <Reports>
@@ -38,8 +42,8 @@
       <FullPath>PRC_PropPhoto_Sub.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>PropertyReportCard.rdl</Name>
-      <FullPath>PropertyReportCard.rdl</FullPath>
+      <Name>PRC_Sales_Sub.rdl</Name>
+      <FullPath>PRC_Sales_Sub.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>PRC_Servicing_Sub.rdl</Name>
@@ -50,8 +54,12 @@
       <FullPath>PRC_Value_Summary_Sub.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>PRC_Sales_Sub.rdl</Name>
-      <FullPath>PRC_Sales_Sub.rdl</FullPath>
+      <Name>PropertyReportCard.rdl</Name>
+      <FullPath>PropertyReportCard.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Copy of PropertyReportCard.rdl</Name>
+      <FullPath>Copy of PropertyReportCard.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
