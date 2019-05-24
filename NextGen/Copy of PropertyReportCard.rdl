@@ -37,42 +37,78 @@
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT DISTINCT AG."Area",
-  MG."Jurisdiction Short Name",
-  PD."Roll Number",
-  PD."Folio Status Code",
-  NB."Neighbourhood",
-  NULLIF(CONCAT(LD."Address Number Prefix", ' '), ' ')
-  || NULLIF(CONCAT(LD."Street Number", ' '), ' ')
-  || NULLIF(CONCAT(LD."Address Street Name", ' '), ' ')
-  || NULLIF(CONCAT(LD."Street Direction", ' '), ' ')
-  || NULLIF(CONCAT(LD."Street Suffix", ' '), ' ')
-  || NULLIF(CONCAT(LD."Street Suffix #2", ' '), ' ')
-  || NULLIF(CONCAT(LD."Building/Unit Number", ' '), ' ')
-  || NULLIF(CONCAT(LD."Unit Description", ' '), ' ')
-  || NULLIF(CONCAT(LD."Address Location Line 2", ' '), ' ')
-  || NULLIF(CONCAT(LD."City", ', '), ', ')
-  || NULLIF(CONCAT(LD."Prov/State", ' '),' ')
-  || NULLIF(CONCAT(LD."Postal Code", ' '), ' ') "Situs"
-FROM PARDAT_VW PD,
-  AREAGRP_VW AG,
-  MUNIGRP_VW MG,
-  LPNBHD_VW NB,
-  LEGDAT_VW LD
-WHERE AG."Area Code"          = PD."Area Code"
-AND MG."Jurisdiction Code"    = PD."Jurisdiction Code"
-AND NB."Neighbourhood Number" = PD."Neighbourhood"
-AND LD."Property Id"       = PD."Property Id"
+        <CommandText>WITH
+    CTE
+    AS
+        (SELECT OD.PARID, OD.OWN1, OD.OWN2
+           FROM "IASDW_IAS"."OWNDAT" OD)
+SELECT DISTINCT
+       PD."Property Id",
+       AG."Area",
+       MG."Jurisdiction Short Name",
+       PD."Roll Number",
+       PD."Folio Status Code",
+       NB."Neighbourhood",
+       SD."SchoolDistrict",
+          NULLIF (CONCAT (LD."Address Number Prefix", ' '), ' ')
+       || NULLIF (CONCAT (LD."Street Number", ' '), ' ')
+       || NULLIF (CONCAT (LD."Address Street Name", ' '), ' ')
+       || NULLIF (CONCAT (LD."Street Direction", ' '), ' ')
+       || NULLIF (CONCAT (LD."Street Suffix", ' '), ' ')
+       || NULLIF (CONCAT (LD."Street Suffix #2", ' '), ' ')
+       || NULLIF (CONCAT (LD."Building/Unit Number", ' '), ' ')
+       || NULLIF (CONCAT (LD."Unit Description", ' '), ' ')
+       || NULLIF (CONCAT (LD."Address Location Line 2", ' '), ' ')
+       || NULLIF (CONCAT (LD."City", ', '), ', ')
+       || NULLIF (CONCAT (LD."Prov/State", ' '), ' ')
+       || NULLIF (CONCAT (LD."Postal Code", ' '), ' ')
+           "Situs",
+       CTE.OWN1 || CTE.OWN2
+           "Owner",
+       ''
+           "Owner Advisory",
+       ''
+           "Property Advisory",
+       ''
+           "Bulk Mail Code",
+       'Width * Depth'
+           "Land Dim Type",
+       "Actual Lot Depth"
+           DEPTH,
+       "Lot Dimensions"
+           ACRES
+  FROM PARDAT_VW   PD,
+       AREAGRP_VW  AG,
+       MUNIGRP_VW  MG,
+       LPNBHD_VW   NB,
+       LEGDAT_VW   LD,
+       (SELECT "Roll Year", "Region Code", "Region" AS "SchoolDistrict"
+          FROM BCA_COMMON.GEOUNIT_VW
+         WHERE "Region Type" = 'SCHDIST') SD,
+       CTE
+ WHERE     AG."Area Code" = PD."Area Code"
+       AND MG."Jurisdiction Code" = PD."Jurisdiction Code"
+       AND NB."Neighbourhood Number" = PD."Neighbourhood"
+       AND LD."Property Id" = PD."Property Id"
+       AND SD."Region Code" = LD."School District"
+       AND CTE."PARID" = PD."Property Id"
+       AND AG."Roll Year" = PD."Roll Year"
+       AND MG."Roll Year" = PD."Roll Year"
+       AND NB."Roll Year" = PD."Roll Year"
+       AND LD."Roll Year" = PD."Roll Year"
+       AND SD."Roll Year" = PD."Roll Year"
 
-AND AG."Roll Year"            = PD."Roll Year"
-AND MG."Roll Year"            = PD."Roll Year"
-AND NB."Roll Year"            = PD."Roll Year"
-AND LD."Roll Year"            = PD."Roll Year"
+
+
 AND PD."Roll Year"         =  :RollYear
 AND PD."Roll Number"       = :RollNumber</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
+        <Field Name="Property_Id">
+          <DataField>Property Id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Area">
           <DataField>Area</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -93,8 +129,40 @@ AND PD."Roll Number"       = :RollNumber</CommandText>
           <DataField>Neighbourhood</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="SchoolDistrict">
+          <DataField>SchoolDistrict</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Situs">
           <DataField>Situs</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Owner">
+          <DataField>Owner</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Owner_Advisory">
+          <DataField>Owner Advisory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Property_Advisory">
+          <DataField>Property Advisory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Bulk_Mail_Code">
+          <DataField>Bulk Mail Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DEPTH">
+          <DataField>DEPTH</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Land_Dim_Type">
+          <DataField>Land Dim Type</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ACRES">
+          <DataField>ACRES</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -641,18 +709,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>PAMELA A STACHOWSKI</Value>
-                                      <Style>
-                                        <FontSize>7pt</FontSize>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>TONI R STACHOWSKI</Value>
+                                      <Value>=Fields!Owner.Value</Value>
                                       <Style>
                                         <FontSize>7pt</FontSize>
                                       </Style>
@@ -745,10 +802,9 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>Sooke</Value>
+                                      <Value>=Fields!SchoolDistrict.Value</Value>
                                       <Style>
                                         <FontSize>7pt</FontSize>
-                                        <Color>Red</Color>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -864,37 +920,6 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                     <PaddingBottom>1pt</PaddingBottom>
                                   </Style>
                                 </Textbox>
-                                <Textbox Name="Textbox19">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>Land Dim Type</Value>
-                                          <Style>
-                                            <FontSize>7pt</FontSize>
-                                            <FontWeight>Bold</FontWeight>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox5</rd:DefaultName>
-                                  <Top>0.15in</Top>
-                                  <Height>0.15in</Height>
-                                  <Width>0.88541in</Width>
-                                  <ZIndex>3</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <PaddingLeft>2pt</PaddingLeft>
-                                    <PaddingRight>2pt</PaddingRight>
-                                    <PaddingBottom>1pt</PaddingBottom>
-                                  </Style>
-                                </Textbox>
                                 <Textbox Name="Textbox20">
                                   <CanGrow>true</CanGrow>
                                   <KeepTogether>true</KeepTogether>
@@ -916,7 +941,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Top>0.45in</Top>
                                   <Height>0.15in</Height>
                                   <Width>0.88541in</Width>
-                                  <ZIndex>4</ZIndex>
+                                  <ZIndex>3</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -947,7 +972,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Top>0.75in</Top>
                                   <Height>0.15in</Height>
                                   <Width>0.88541in</Width>
-                                  <ZIndex>5</ZIndex>
+                                  <ZIndex>4</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -977,7 +1002,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <rd:DefaultName>Textbox5</rd:DefaultName>
                                   <Height>0.15in</Height>
                                   <Width>0.88541in</Width>
-                                  <ZIndex>6</ZIndex>
+                                  <ZIndex>5</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1008,7 +1033,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Top>1.05in</Top>
                                   <Height>0.15in</Height>
                                   <Width>0.88541in</Width>
-                                  <ZIndex>7</ZIndex>
+                                  <ZIndex>6</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1025,7 +1050,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                     <Paragraph>
                                       <TextRuns>
                                         <TextRun>
-                                          <Value />
+                                          <Value>=Fields!Bulk_Mail_Code.Value</Value>
                                           <Style>
                                             <FontSize>7pt</FontSize>
                                           </Style>
@@ -1038,38 +1063,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Left>0.89434in</Left>
                                   <Height>0.15in</Height>
                                   <Width>1.54052in</Width>
-                                  <ZIndex>8</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <PaddingLeft>2pt</PaddingLeft>
-                                    <PaddingRight>2pt</PaddingRight>
-                                    <PaddingBottom>1pt</PaddingBottom>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="Textbox63">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>Width * Depth</Value>
-                                          <Style>
-                                            <FontSize>7pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox5</rd:DefaultName>
-                                  <Top>0.15in</Top>
-                                  <Left>0.89434in</Left>
-                                  <Height>0.15in</Height>
-                                  <Width>1.54052in</Width>
-                                  <ZIndex>9</ZIndex>
+                                  <ZIndex>7</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1086,7 +1080,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                     <Paragraph>
                                       <TextRuns>
                                         <TextRun>
-                                          <Value>117</Value>
+                                          <Value>=Fields!DEPTH.Value</Value>
                                           <Style>
                                             <FontSize>7pt</FontSize>
                                           </Style>
@@ -1100,7 +1094,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Left>0.89434in</Left>
                                   <Height>0.15in</Height>
                                   <Width>1.54052in</Width>
-                                  <ZIndex>10</ZIndex>
+                                  <ZIndex>8</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1117,7 +1111,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                     <Paragraph>
                                       <TextRuns>
                                         <TextRun>
-                                          <Value>81.00</Value>
+                                          <Value>=Fields!ACRES.Value</Value>
                                           <Style>
                                             <FontSize>7pt</FontSize>
                                           </Style>
@@ -1131,7 +1125,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Left>0.89434in</Left>
                                   <Height>0.15in</Height>
                                   <Width>1.54052in</Width>
-                                  <ZIndex>11</ZIndex>
+                                  <ZIndex>9</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1162,7 +1156,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Left>0.89434in</Left>
                                   <Height>0.15in</Height>
                                   <Width>1.54052in</Width>
-                                  <ZIndex>12</ZIndex>
+                                  <ZIndex>10</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1193,7 +1187,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Left>0.89434in</Left>
                                   <Height>0.15in</Height>
                                   <Width>1.54052in</Width>
-                                  <ZIndex>13</ZIndex>
+                                  <ZIndex>11</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1224,7 +1218,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Left>0.89434in</Left>
                                   <Height>0.15in</Height>
                                   <Width>1.54052in</Width>
-                                  <ZIndex>14</ZIndex>
+                                  <ZIndex>12</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1255,7 +1249,7 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   <Top>1.2in</Top>
                                   <Height>1.29423in</Height>
                                   <Width>2.41552in</Width>
-                                  <ZIndex>15</ZIndex>
+                                  <ZIndex>13</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1362,7 +1356,6 @@ Fields!Folio_Status_Code.Value = "07","Corporation"
                                   </Paragraphs>
                                   <rd:DefaultName>Textbox5</rd:DefaultName>
                                   <Top>0.15in</Top>
-                                  <Left>0.01413in</Left>
                                   <Height>0.15in</Height>
                                   <Width>1.3125in</Width>
                                   <ZIndex>2</ZIndex>
