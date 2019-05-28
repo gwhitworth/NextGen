@@ -9,7 +9,7 @@ for each REGIMP record with the REGDEP.DEPTNO of the row in the report.
 */
 
   SELECT RI."Department Id",
-         SUM (
+         NVL(SUM (
              CASE
                  WHEN RI."Rcnld Override Value" > 0
                  THEN
@@ -24,7 +24,7 @@ for each REGIMP record with the REGDEP.DEPTNO of the row in the report.
                              + RI."Observed Depreciation"
                              + RI."Economic Depreciation")
                           / 100)
-             END)
+             END),0)
              "Department RCNLD"
     FROM REGIMP_VW RI
    WHERE RI."Property Id" = '03129059' AND "Roll Year" = 2018
