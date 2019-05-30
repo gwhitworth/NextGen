@@ -14,6 +14,10 @@
   <DataSets />
   <Reports>
     <ProjectItem>
+      <Name>AdVal Departments.rdl</Name>
+      <FullPath>AdVal Departments.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Copy of PropertyReportCard.rdl</Name>
       <FullPath>Copy of PropertyReportCard.rdl</FullPath>
     </ProjectItem>
@@ -62,8 +66,12 @@
       <FullPath>PropertyReportCard.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>AdVal Departments.rdl</Name>
-      <FullPath>AdVal Departments.rdl</FullPath>
+      <Name>AdVal Department Sub1.rdl</Name>
+      <FullPath>AdVal Department Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>AdVal Department Sub2.rdl</Name>
+      <FullPath>AdVal Department Sub2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
