@@ -14,6 +14,14 @@
   <DataSets />
   <Reports>
     <ProjectItem>
+      <Name>AdVal Department Sub1.rdl</Name>
+      <FullPath>AdVal Department Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>AdVal Department Sub2.rdl</Name>
+      <FullPath>AdVal Department Sub2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>AdVal Departments.rdl</Name>
       <FullPath>AdVal Departments.rdl</FullPath>
     </ProjectItem>
@@ -66,12 +74,16 @@
       <FullPath>PropertyReportCard.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>AdVal Department Sub1.rdl</Name>
-      <FullPath>AdVal Department Sub1.rdl</FullPath>
+      <Name>GERRYS_TEST.rdl</Name>
+      <FullPath>GERRYS_TEST.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>AdVal Department Sub2.rdl</Name>
-      <FullPath>AdVal Department Sub2.rdl</FullPath>
+      <Name>Test_IAS_SSRS_Report.rdl</Name>
+      <FullPath>Test_IAS_SSRS_Report.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PlantFacilitySummary.rdl</Name>
+      <FullPath>PlantFacilitySummary.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
@@ -81,8 +93,8 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2016</TargetServerVersion>
-        <TargetServerURL>http://localhost/reportserver</TargetServerURL>
-        <TargetFolder>NextGen</TargetFolder>
+        <TargetServerURL>http://bcadsql01/Reports</TargetServerURL>
+        <TargetFolder>iasWorld/IAS_World_Reports</TargetFolder>
         <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>
@@ -111,6 +123,19 @@
         <TargetServerVersion>SSRS2016</TargetServerVersion>
         <TargetServerURL>http://localhost/reportserver</TargetServerURL>
         <TargetFolder>NextGen</TargetFolder>
+        <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
+        <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
+        <TargetDatasetFolder>Datasets</TargetDatasetFolder>
+        <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
+      </Options>
+    </Configuration>
+    <Configuration>
+      <Name>Test</Name>
+      <Options>
+        <OutputPath>bin\Debug</OutputPath>
+        <TargetServerVersion>SSRS2016</TargetServerVersion>
+        <TargetServerURL>http://bcadsql01/ReportServer</TargetServerURL>
+        <TargetFolder>iasWorld/iasWorld Reports</TargetFolder>
         <TargetMobileReportFolder>Mobile Reports</TargetMobileReportFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>
