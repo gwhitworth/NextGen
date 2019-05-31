@@ -949,7 +949,7 @@ WHERE RM."Roll Year" = :RollYear
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>AdVal Departments</Value>
+                      <Value>Plant/Facility Summary</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>

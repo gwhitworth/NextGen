@@ -13,8 +13,21 @@
     <DataSet Name="qryData">
       <Query>
         <DataSourceName>BCA_COMMON</DataSourceName>
-        <CommandText>
-  SELECT RI."Improvement #"
+        <QueryParameters>
+          <QueryParameter Name="RollYear">
+            <Value>=Parameters!RollYear.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="RegId">
+            <Value>=Parameters!RegId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="DeptId">
+            <Value>=Parameters!DeptId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT RI."Improvement #"
              "Imp #",
          RI."User Field 4"
              "Imp Description/Imp Type",
@@ -87,9 +100,9 @@
                        FROM BCA_COMMON.AEDIT_VW
                       WHERE "Field Name" = 'COST_SRC') CS
              ON CS."Value" = RI."Cost Source"
-   WHERE     RI."Roll Year" = 2019
-         AND RI."Reg. Id" = '0000020699'
-         AND RI."Department Id" = 1
+   WHERE     RI."Roll Year" = :RollYear
+         AND RI."Reg. Id" = :RegId
+         AND RI."Department Id" = :DeptId
 ORDER BY RI."Improvement #"</CommandText>
       </Query>
       <Fields>
@@ -1867,6 +1880,20 @@ ORDER BY RI."Improvement #"</CommandText>
                       <CellContents>
                         <Subreport Name="Subreport1">
                           <ReportName>AdVal Department Sub2</ReportName>
+                          <Parameters>
+                            <Parameter Name="RollYear">
+                              <Value>=Parameters!RollYear.Value</Value>
+                            </Parameter>
+                            <Parameter Name="RegId">
+                              <Value>=Parameters!RegId.Value</Value>
+                            </Parameter>
+                            <Parameter Name="DeptId">
+                              <Value>=Parameters!DeptId.Value</Value>
+                            </Parameter>
+                            <Parameter Name="ImprId">
+                              <Value>=Fields!Imp__.Value</Value>
+                            </Parameter>
+                          </Parameters>
                           <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                           <Style>
                             <Border>
@@ -1875,6 +1902,7 @@ ORDER BY RI."Improvement #"</CommandText>
                           </Style>
                         </Subreport>
                         <ColSpan>12</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1965,9 +1993,12 @@ ORDER BY RI."Improvement #"</CommandText>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
-                    <TablixMember />
+                    <TablixMember>
+                      <RepeatOnNewPage>true</RepeatOnNewPage>
+                    </TablixMember>
                   </TablixMembers>
                   <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Imp__">
@@ -2039,7 +2070,6 @@ ORDER BY RI."Improvement #"</CommandText>
                         <TablixMember />
                       </TablixMembers>
                       <Visibility>
-                        <Hidden>true</Hidden>
                         <ToggleItem>Imp__1</ToggleItem>
                       </Visibility>
                     </TablixMember>
@@ -2070,10 +2100,56 @@ ORDER BY RI."Improvement #"</CommandText>
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="RollYear">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2019</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Roll Year</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="RegId">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0000020699</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Reg Id</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DeptId">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Dept Id</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
       <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>RollYear</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>RegId</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>DeptId</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>

@@ -13,8 +13,26 @@
     <DataSet Name="qryData">
       <Query>
         <DataSourceName>BCA_COMMON</DataSourceName>
-        <CommandText>/* Formatted on 29-May-19 5:16:58 PM (QP5 v5.326) */
-SELECT RI."Improvement #",
+        <QueryParameters>
+          <QueryParameter Name="RollYear">
+            <Value>=Parameters!RollYear.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="RegId">
+            <Value>=Parameters!RegId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="DeptId">
+            <Value>=Parameters!DeptId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="ImprId">
+            <Value>=Parameters!ImprId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT DISTINCT 
+       RI."Improvement #",
        CP."Property Class Code" || ' ' || CS."Message"
            "Property Class",
        (CP."Tax Exemption Code" || ' ' || EX."Description")
@@ -56,10 +74,10 @@ SELECT RI."Improvement #",
           FROM BCA_COMMON.EXCODE_VW) EX
            ON     EX."Roll Year" = RI."Roll Year"
               AND EX."Exemption Code" = CP."Tax Exemption Code"
- WHERE     RI."Roll Year" = 2019
-       AND RI."Reg. Id" = '0000020699'
-       AND RI."Department Id" = 1
-       AND RI."Improvement #" = 5</CommandText>
+ WHERE     RI."Roll Year" = :RollYear
+       AND RI."Reg. Id" = :RegId
+       AND RI."Department Id" = :DeptId
+       AND RI."Improvement #" = :ImprId</CommandText>
       </Query>
       <Fields>
         <Field Name="Improvement__">
@@ -504,10 +522,70 @@ SELECT RI."Improvement #",
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="RollYear">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2019</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Roll Year</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="RegId">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0000020699</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Reg Id</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DeptId">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Dept Id</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ImprId">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>5</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Impr Id</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
       <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>RollYear</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>RegId</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>DeptId</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>ImprId</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
