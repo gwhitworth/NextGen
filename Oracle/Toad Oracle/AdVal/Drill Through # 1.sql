@@ -1,5 +1,6 @@
 
-  SELECT RI."Improvement #"
+  SELECT RI."Property Id",
+  RI."Improvement #"
              "Imp #",
          RI."User Field 4"
              "Imp Description/Imp Type",
