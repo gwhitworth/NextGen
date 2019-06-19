@@ -30,6 +30,18 @@
       <FullPath>Copy of PropertyReportCard.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>GERRYS_TEST.rdl</Name>
+      <FullPath>GERRYS_TEST.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PlantFacilitySummary Sub1.rdl</Name>
+      <FullPath>PlantFacilitySummary Sub1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PlantFacilitySummary.rdl</Name>
+      <FullPath>PlantFacilitySummary.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>PRC_CarPort_Sub.rdl</Name>
       <FullPath>PRC_CarPort_Sub.rdl</FullPath>
     </ProjectItem>
@@ -72,18 +84,6 @@
     <ProjectItem>
       <Name>PropertyReportCard.rdl</Name>
       <FullPath>PropertyReportCard.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>GERRYS_TEST.rdl</Name>
-      <FullPath>GERRYS_TEST.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Test_IAS_SSRS_Report.rdl</Name>
-      <FullPath>Test_IAS_SSRS_Report.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>PlantFacilitySummary.rdl</Name>
-      <FullPath>PlantFacilitySummary.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

@@ -24,32 +24,32 @@
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT DISTINCT
-       RM."Reg. Id",
+       RM."Reg. ID",
        RM."Area Code",
-       RM."Municipality",
-       RM."Alt. Id",
+       RM."Jurisdiction",
+       RM."Alternate Id",
        RM."Description"
            "Plant/Facility Name",
-       PC."Message"
+       PC."Description"
            "Plant Category/Facility Type",
-       RD."Dept. No"
-           "Department #",
-       RD."Reg. Descr",
+       RD."Department Id"
+           "Department Id",
+       RD."Dept Description",
        CASE
            WHEN INSTR (RM."Description",
-                       RM."Area Code" || RM."Municipality",
+                       RM."Area Code" || RM."Jurisdiction",
                        1,
                        1) = 1
            THEN
                REPLACE (RM."Description",
-                        RM."Area Code" || RM."Municipality",
+                        RM."Area Code" || RM."Jurisdiction",
                         '')
            ELSE
                RD."Property Id"
        END
            "Folio ID",
        DC."CNT"
-           "# Improvements",
+           "Num Of Improvements",
        NVL (DC."BaseCost", 0) + NVL (DC."CostAdj", 0)
            "Base Cost",
        NVL (
@@ -88,23 +88,23 @@
            "RCNLD"
   FROM BCA_COMMON.REGMAST_VW  RM
        INNER JOIN BCA_COMMON.REGDEPT_VW RD
-           ON RM."Reg. Id" = RD."Reg. Id" AND RM."Roll Year" = RD."Roll Year"
+           ON RM."Reg. ID" = RD."Regulated Entity Id" AND RM."Roll Year" = RD."Roll Year"
        INNER JOIN BCA_COMMON.REGIMP_VW RI
-           ON     RI."Department Id" = RD."Dept. Id"
+           ON     RI."Department Id" = RD."Department Id"
               AND RI."Roll Year" = RD."Roll Year"
        INNER JOIN
-       (  SELECT RI2."Reg. Id",
+       (  SELECT RI2."Regulated Entity Id",
                  RI2."Roll Year",
                  RI2."Department Id",
                  COUNT (*)
                      "CNT",
                  SUM (RI2."Base Cost For Plant")
                      "BaseCost",
-                 SUM (RI2."Costadj")
+                 SUM (RI2."COSTADJ")
                      "CostAdj",
                  SUM (RI2."Idcfact")
                      "IdcFact",
-                 SUM (RI2."Rcnld Override Value")
+                 SUM (RI2."Override RCNLD ")
                      "Rcnld Override Value",
                  SUM (RI2."Depreciation")
                      "Depreciation",
@@ -115,36 +115,34 @@
                  SUM (RI2."Economic Depreciation")
                      "Economic Depreciation"
             FROM BCA_COMMON.REGIMP_VW RI2
-        GROUP BY RI2."Reg. Id", RI2."Roll Year", RI2."Department Id") DC
-           ON DC."Reg. Id" = RD."Reg. Id" AND DC."Roll Year" = RD."Roll Year"
-       INNER JOIN (SELECT "Value", "Message"
-                     FROM BCA_COMMON.AEDIT_VW
-                    WHERE "Field Name" = 'PLCATEGORY'
-                   UNION
-                   SELECT "Value 1", "Msg"
-                     FROM BCA_COMMON.DEDIT_VW
-                    WHERE "Field 1" = 'PLCATEGORY'
-                   ORDER BY "Message") PC
-           ON PC."Value" = RM."Plant Category"
-
-WHERE RM."Roll Year" = :RollYear  
-     AND RM."Reg. Id" = :RegId</CommandText>
+        GROUP BY RI2."Regulated Entity Id", RI2."Roll Year", RI2."Department Id") DC
+           ON DC."Regulated Entity Id" = RD."Regulated Entity Id" AND DC."Roll Year" = RD."Roll Year"
+       INNER JOIN (SELECT "Code", "Description"
+                    FROM BCA_COMMON.AEDIT_VW
+                   WHERE "Field Name" = 'PLCATEGORY'
+                  UNION
+                  SELECT "Code 1", "Description"
+                    FROM BCA_COMMON.DEDIT_VW
+                   WHERE "Field Name 1" = 'PLCATEGORY') PC
+           ON PC."Code" = RM."Plant Category"
+ WHERE RM."Roll Year" = 2019 AND RM."Reg. ID" = '0000077518'</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
         <Field Name="Reg__Id">
-          <DataField>Reg. Id</DataField>
+          <DataField>Reg. ID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Area_Code">
           <DataField>Area Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Municipality">
-          <DataField>Municipality</DataField>
+        <Field Name="Jurisdiction">
+          <DataField>Jurisdiction</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Alt__Id">
-          <DataField>Alt. Id</DataField>
+        <Field Name="Alternate_Id">
+          <DataField>Alternate Id</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Plant_Facility_Name">
@@ -155,20 +153,20 @@ WHERE RM."Roll Year" = :RollYear
           <DataField>Plant Category/Facility Type</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Department__">
-          <DataField>Department #</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="Department_Id">
+          <DataField>Department Id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Reg__Descr">
-          <DataField>Reg. Descr</DataField>
+        <Field Name="Dept_Description">
+          <DataField>Dept Description</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Folio_ID">
           <DataField>Folio ID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ID__Improvements">
-          <DataField># Improvements</DataField>
+        <Field Name="Num_Of_Improvements">
+          <DataField>Num Of Improvements</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Base_Cost">
@@ -483,14 +481,14 @@ WHERE RM."Roll Year" = :RollYear
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Reg__Descr">
+                        <Textbox Name="Dept_Description2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Reg__Descr.Value</Value>
+                                  <Value>=Fields!Dept_Description.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -499,7 +497,7 @@ WHERE RM."Roll Year" = :RollYear
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Reg__Descr</rd:DefaultName>
+                          <rd:DefaultName>Dept_Description</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
                           <Style>
                             <Border>
@@ -519,14 +517,14 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Folio_ID">
+                        <Textbox Name="Folio_ID2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Area_Code.Value + "-" + Fields!Municipality.Value + "-" + Fields!Folio_ID.Value</Value>
+                                  <Value>=Fields!Area_Code.Value + "-" + Fields!Jurisdiction.Value + "-" + Fields!Folio_ID.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -555,14 +553,14 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ID__Improvements">
+                        <Textbox Name="Num_Of_Improvements2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ID__Improvements.Value</Value>
+                                  <Value>=Sum(Fields!Num_Of_Improvements.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -574,7 +572,7 @@ WHERE RM."Roll Year" = :RollYear
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ID__Improvements</rd:DefaultName>
+                          <rd:DefaultName>Num_Of_Improvements</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
                           <Style>
                             <Border>
@@ -594,7 +592,7 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Base_Cost">
+                        <Textbox Name="Base_Cost2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -634,7 +632,7 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Updated_Cost">
+                        <Textbox Name="Updated_Cost2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -674,7 +672,7 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="RCN">
+                        <Textbox Name="RCN2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -714,7 +712,7 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="RCNLD">
+                        <Textbox Name="RCNLD2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -769,7 +767,7 @@ WHERE RM."Roll Year" = :RollYear
                               <Value>=Parameters!REGID.Value</Value>
                             </Parameter>
                             <Parameter Name="DeptId">
-                              <Value>=Fields!Department__.Value</Value>
+                              <Value>=Fields!Department_Id.Value</Value>
                             </Parameter>
                           </Parameters>
                           <KeepTogether>true</KeepTogether>
@@ -779,6 +777,47 @@ WHERE RM."Roll Year" = :RollYear
                             </Border>
                           </Style>
                         </Subreport>
+                        <ColSpan>7</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox69">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox69</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                         <ColSpan>7</ColSpan>
                       </CellContents>
                     </TablixCell>
@@ -859,12 +898,12 @@ WHERE RM."Roll Year" = :RollYear
                 <TablixMember>
                   <Group Name="Department__">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Department__.Value</GroupExpression>
+                      <GroupExpression>=Fields!Department_Id.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!Department__.Value</Value>
+                      <Value>=Fields!Department_Id.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
@@ -877,7 +916,7 @@ WHERE RM."Roll Year" = :RollYear
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!Department__.Value</Value>
+                                <Value>=Fields!Department_Id.Value</Value>
                                 <Style>
                                   <FontSize>9pt</FontSize>
                                 </Style>
@@ -907,8 +946,15 @@ WHERE RM."Roll Year" = :RollYear
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
                     <TablixMember>
+                      <Visibility>
+                        <ToggleItem>Department__</ToggleItem>
+                      </Visibility>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
                       <Group Name="Details" />
                       <Visibility>
+                        <Hidden>true</Hidden>
                         <ToggleItem>Department__</ToggleItem>
                       </Visibility>
                     </TablixMember>
@@ -923,7 +969,7 @@ WHERE RM."Roll Year" = :RollYear
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
             <Top>0.03417in</Top>
-            <Height>0.71in</Height>
+            <Height>0.96in</Height>
             <Width>10.50917in</Width>
             <Style>
               <Border>
@@ -932,7 +978,7 @@ WHERE RM."Roll Year" = :RollYear
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.78417in</Height>
+        <Height>0.99417in</Height>
         <Style />
       </Body>
       <Width>10.50917in</Width>
@@ -1016,9 +1062,9 @@ WHERE RM."Roll Year" = :RollYear
                     <TextRun>
                       <Value>=First(Fields!Area_Code.Value, "qryData")
 + "-"
-+ First(Fields!Municipality.Value, "qryData")
++ First(Fields!Jurisdiction.Value, "qryData")
 + "-"
-+ First(Fields!Alt__Id.Value, "qryData")</Value>
++ First(Fields!Alternate_Id.Value, "qryData")</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>

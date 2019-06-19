@@ -27,28 +27,29 @@
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT RI."Improvement #"
+        <CommandText>SELECT RI."Property Id",
+         RI."Improvement Number"
              "Imp #",
-         RI."User Field 4"
+         RI."Imp Description"
              "Imp Description/Imp Type",
-         RI."User Field 3"
+         RI."Imp Type"
              "Imp Type",
-         CS."Message"
+         CS."Description"
              "Cost Source/Cost Year",
          RI."Plant Improvement Cost Year"
              "Cost Year",
          NVL (RI."Base Cost For Plant", 0)
              "Cost/CostAdj",
-         NVL (RI."Costadj", 0)
+         NVL (RI."COSTADJ", 0)
              "CostAdj",
-         NVL (RI."Base Cost For Plant", 0) + NVL (RI."Costadj", 0)
+         NVL (RI."Base Cost For Plant", 0) + NVL (RI."COSTADJ", 0)
              "Base Cost",
-         (  (RI."Base Cost For Plant" + NVL (RI."Costadj", 0))
+         (  (RI."Base Cost For Plant" + NVL (RI."COSTADJ", 0))
           * NVL (RI."Plupdfact", 1))
              "Updated Cost",
          NVL (RI."Plupdfact", 1)
              "Update Factor",
-         (  (  (NVL (RI."Base Cost For Plant", 0) + NVL (RI."Costadj", 0))
+         (  (  (NVL (RI."Base Cost For Plant", 0) + NVL (RI."COSTADJ", 0))
              * NVL (RI."Plupdfact", 1))
           * CASE
                 WHEN RI."Exclude Idc Factor" = 'Y' THEN 1
@@ -75,12 +76,12 @@
              "Total Depreciation",
          NVL (
              CASE
-                 WHEN RI."Rcnld Override Value" &gt; 0
+                 WHEN RI."Override RCNLD " &gt; 0
                  THEN
-                     RI."Rcnld Override Value"
+                     RI."Override RCNLD "
                  ELSE
                        (  NVL (RI."Base Cost For Plant", 0)
-                        + NVL (RI."Costadj", 0) * NVL (RI."Plupdfact", 1))
+                        + NVL (RI."COSTADJ", 0) * NVL (RI."Plupdfact", 1))
                      * NVL ((RI."Idcfact" / 100), 1)
                      * NVL (
                            (  1
@@ -93,19 +94,24 @@
              END,
              0)
              "RCNLD",
-         RI."Suppress"
+         RI."Suppress Flag"
              "Suppress Calc"
     FROM BCA_COMMON.REGIMP_VW RI
-         INNER JOIN (SELECT "Value", "Message"
-                       FROM BCA_COMMON.AEDIT_VW
-                      WHERE "Field Name" = 'COST_SRC') CS
-             ON CS."Value" = RI."Cost Source"
-   WHERE     RI."Roll Year" = :RollYear
-         AND RI."Reg. Id" = :RegId
-         AND RI."Department Id" = :DeptId
-ORDER BY RI."Improvement #"</CommandText>
+         LEFT JOIN (SELECT "Code", "Description"
+                      FROM BCA_COMMON.AEDIT_VW
+                     WHERE "Field Name" = 'COST_SRC') CS
+             ON CS."Code" = RI."Cost Source"
+   WHERE     RI."Roll Year" = 2019
+         AND RI."Regulated Entity Id" = '0000077518'
+         AND RI."Department Id" = 1
+ORDER BY RI."Improvement Number"</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
+        <Field Name="Property_Id">
+          <DataField>Property Id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Imp__">
           <DataField>Imp #</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -1902,7 +1908,6 @@ ORDER BY RI."Improvement #"</CommandText>
                           </Style>
                         </Subreport>
                         <ColSpan>12</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />

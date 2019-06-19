@@ -22,69 +22,27 @@
             <Value>=Parameters!RegId.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
-          <QueryParameter Name="DeptId">
-            <Value>=Parameters!DeptId.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-          <QueryParameter Name="ImprId">
-            <Value>=Parameters!ImprId.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT DISTINCT
-       RI."Improvement Number",
-       CP."Property Class Code" || ' ' || CS."Description"
-           "Property Class",
-       (CP."Tax Exemption Code" || ' ' || EX."Description")
-           "Exemption Tax Code",
-       CP."Percentage" / 100
-           "Exempt %",
-       NVL (
-           CASE
-               WHEN RI."Override RCNLD " &gt; 00
-               THEN
-                   RI."Override RCNLD "
-               ELSE
-                     (  NVL (RI."Base Cost For Plant", 0)
-                      + NVL (RI."COSTADJ", 0) * NVL (RI."Plupdfact", 1))
-                   * NVL ((RI."Idcfact" / 100), 1)
-                   * NVL (
-                         (  1
-                          -   (  RI."Depreciation"
-                               + RI."Functional Depreciation"
-                               + RI."Observed Depreciation"
-                               + RI."Economic Depreciation")
-                            / 100),
-                         1)
-           END,
-           0)
-           "Value"
-  FROM BCA_COMMON.REGIMP_VW  RI
-       INNER JOIN BCA_COMMON.CLASSPCT_VW CP
-           ON     CP."Property Id" = RI."Property Id"
-              AND CP."Line Number" = RI."Line Number"
-              AND CP."Roll Year" = RI."Roll Year"
-       LEFT JOIN
-       (SELECT "Code", "Description"
-          FROM BCA_COMMON.AEDIT_VW
-         WHERE "Table Name" = 'CLASSPCT' AND "Field Name" = 'CLASS') CS
-           ON CS."Code" = CP."Property Class Code"
-       INNER JOIN
-       (SELECT "Roll Year", "Exemption Code", "Description"
-          FROM BCA_COMMON.EXCODE_VW) EX
-           ON     EX."Roll Year" = RI."Roll Year"
-              AND EX."Exemption Code" = CP."Tax Exemption Code"
- WHERE     RI."Roll Year" = 2019
-       AND RI."Regulated Entity Id" = '0000077518'
-       AND RI."Department Id" = 1
-       AND RI."Improvement Number" = 5</CommandText>
+        <CommandText>SELECT DISTINCT 
+                         CP."Property Class Code" | | ' ' | | CS."Description" "Property Class", (CP."Tax Exemption Code" | | ' ' | | EX."Description") "Exemption Tax Code", (NVL(IC."Averge Depreciation", 0) / 100) "Averge Depreciation", 
+                         AVG(CP."Percentage" / 100) "Exempt %", SUM(NVL(NVL(((NVL(RI."Base Cost For Plant", 0) + NVL(RI."COSTADJ", 0)) * NVL((RI."Idcfact" / 100), 1) 
+                         * NVL(CASE WHEN RI."Exclude Idc Factor" = 'Y' THEN 1 ELSE NVL((RI."Idcfact" / 100), 1) END, 1)), 0) - (NVL(((NVL(RI."Base Cost For Plant", 0) + NVL(RI."COSTADJ", 0)) * NVL((RI."Idcfact" / 100), 1) 
+                         * NVL(CASE WHEN RI."Exclude Idc Factor" = 'Y' THEN 1 ELSE NVL((RI."Idcfact" / 100), 1) END, 1)), 1) * .7), 1)) "Value"
+FROM            BCA_COMMON.REGIMP_VW RI INNER JOIN
+                         BCA_COMMON.CLASSPCT_VW CP ON CP."Property Id" = RI."Property Id" AND CP."Line Number" = RI."Line Number" AND CP."Roll Year" = RI."Roll Year" INNER JOIN
+                             (SELECT        "Code", "Description"
+                               FROM            BCA_COMMON.AEDIT_VW
+                               WHERE        "Table Name" = 'CLASSPCT' AND "Field Name" = 'CLASS') CS ON CS."Code" = CP."Property Class Code" INNER JOIN
+                             (SELECT        "Roll Year", "Exemption Code", "Description"
+                               FROM            BCA_COMMON.EXCODE_VW) EX ON EX."Roll Year" = RI."Roll Year" AND EX."Exemption Code" = CP."Tax Exemption Code" INNER JOIN
+                             (SELECT        RI2."Regulated Entity Id", RI2."Roll Year", AVG("Depreciation") "Averge Depreciation"
+                               FROM            BCA_COMMON.REGIMP_VW RI2
+                               GROUP BY RI2."Regulated Entity Id", RI2."Roll Year") IC ON IC."Regulated Entity Id" = RI."Regulated Entity Id" AND IC."Roll Year" = RI."Roll Year"
+WHERE        RI."Roll Year" = : RollYear AND RI."Regulated Entity Id" = : RegId
+GROUP BY CP."Property Class Code" | | ' ' | | CS."Description", (CP."Tax Exemption Code" | | ' ' | | EX."Description"), (NVL(IC."Averge Depreciation", 0) / 100)</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="Improvement_Number">
-          <DataField>Improvement Number</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
         <Field Name="Property_Class">
           <DataField>Property Class</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -92,6 +50,10 @@
         <Field Name="Exemption_Tax_Code">
           <DataField>Exemption Tax Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Averge_Depreciation">
+          <DataField>Averge Depreciation</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Exempt__">
           <DataField>Exempt %</DataField>
@@ -537,34 +499,16 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>0000020699</Value>
+          <Value>0000077518</Value>
         </Values>
       </DefaultValue>
       <Prompt>Reg Id</Prompt>
     </ReportParameter>
-    <ReportParameter Name="DeptId">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>1</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Dept Id</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="ImprId">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>5</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Impr Id</Prompt>
-    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
+      <NumberOfColumns>2</NumberOfColumns>
+      <NumberOfRows>1</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -575,16 +519,6 @@
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>RegId</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
-          <RowIndex>0</RowIndex>
-          <ParameterName>DeptId</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>3</ColumnIndex>
-          <RowIndex>0</RowIndex>
-          <ParameterName>ImprId</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

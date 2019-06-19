@@ -23,128 +23,50 @@
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT DISTINCT
-       RM."Reg. Id",
-       RM."Area Code",
-       RM."Municipality",
-       RM."Alt. Id",
-       RM."Description"
-           "Plant/Facility Name",
-       PC."Message"
-           "Plant Category/Facility Type",
-       RD."Dept. No"
-           "Department #",
-       RD."Reg. Descr",
-       CASE
-           WHEN INSTR (RM."Description",
-                       RM."Area Code" || RM."Municipality",
-                       1,
-                       1) = 1
-           THEN
-               REPLACE (RM."Description",
-                        RM."Area Code" || RM."Municipality",
-                        '')
-           ELSE
-               RD."Property Id"
-       END
-           "Folio ID",
-       DC."CNT"
-           "# Improvements",
-       NVL (DC."BaseCost", 0) + NVL (DC."CostAdj", 0)
-           "Base Cost",
-       NVL (
-           (  (NVL (DC."BaseCost", 0) + NVL (DC."CostAdj", 0))
-            * NVL ((DC."IdcFact" / 100), 1)),
-           0)
-           "Updated Cost",
-       NVL (
-           (  (NVL (DC."BaseCost", 0) + NVL (DC."CostAdj", 0))
-            * NVL ((DC."IdcFact" / 100), 1)
-            * NVL (
-                  CASE
-                      WHEN RI."Exclude Idc Factor" = 'Y' THEN 1
-                      ELSE NVL ((DC."IdcFact" / 100), 1)
-                  END,
-                  1)),
-           0)
-           "RCN",
-       NVL (
-           CASE
-               WHEN DC."Rcnld Override Value" &gt; 0
-               THEN
-                   DC."Rcnld Override Value"
-               ELSE
-                     (  DC."BaseCost"
-                      + NVL (DC."CostAdj", 0) * NVL (DC."IdcFact", 1))
-                   * NVL ((DC."IdcFact" / 100), 1)
-                   * (  1
-                      -   (  DC."Depreciation"
-                           + DC."Functional Depreciation"
-                           + DC."Observed Depreciation"
-                           + DC."Economic Depreciation")
-                        / 100)
-           END,
-           NVL (DC."BaseCost", 0))
-           "RCNLD"
-  FROM BCA_COMMON.REGMAST_VW  RM
-       INNER JOIN BCA_COMMON.REGDEPT_VW RD
-           ON RM."Reg. Id" = RD."Reg. Id" AND RM."Roll Year" = RD."Roll Year"
-       INNER JOIN BCA_COMMON.REGIMP_VW RI
-           ON     RI."Department Id" = RD."Dept. Id"
-              AND RI."Roll Year" = RD."Roll Year"
-       INNER JOIN
-       (  SELECT RI2."Reg. Id",
-                 RI2."Roll Year",
-                 RI2."Department Id",
-                 COUNT (*)
-                     "CNT",
-                 SUM (RI2."Base Cost For Plant")
-                     "BaseCost",
-                 SUM (RI2."Costadj")
-                     "CostAdj",
-                 SUM (RI2."Idcfact")
-                     "IdcFact",
-                 SUM (RI2."Rcnld Override Value")
-                     "Rcnld Override Value",
-                 SUM (RI2."Depreciation")
-                     "Depreciation",
-                 SUM (RI2."Functional Depreciation")
-                     "Functional Depreciation",
-                 SUM (RI2."Observed Depreciation")
-                     "Observed Depreciation",
-                 SUM (RI2."Economic Depreciation")
-                     "Economic Depreciation"
-            FROM BCA_COMMON.REGIMP_VW RI2
-        GROUP BY RI2."Reg. Id", RI2."Roll Year", RI2."Department Id") DC
-           ON DC."Reg. Id" = RD."Reg. Id" AND DC."Roll Year" = RD."Roll Year"
-       INNER JOIN (SELECT "Value", "Message"
-                     FROM BCA_COMMON.AEDIT_VW
-                    WHERE "Field Name" = 'PLCATEGORY'
-                   UNION
-                   SELECT "Value 1", "Msg"
-                     FROM BCA_COMMON.DEDIT_VW
-                    WHERE "Field 1" = 'PLCATEGORY'
-                   ORDER BY "Message") PC
-           ON PC."Value" = RM."Plant Category"
-
-WHERE RM."Roll Year" = :RollYear  
-     AND RM."Reg. Id" = :RegId</CommandText>
+        <CommandText>SELECT DISTINCT 
+                         RM."Reg. ID", RM."Area Code", RM."Jurisdiction", RM."Alternate Id", RM."Description" "Plant/Facility Name", PC."Description" "Plant Category/Facility Type", RD."Department Id" "Department Id", 
+                         RD."Dept Description", RM."Plant Primary Division" "Plant Primary Div", RM."Userval 1" "Plant Capacity Units", RM."User Defined Field 1" "Plant Capacity Code", RM."Plant Closure Year" "Plant Closure Yr", 
+                         CASE WHEN INSTR(RM."Description", RM."Area Code" | | RM."Jurisdiction", 1, 1) = 1 THEN "REPLACE"(RM."Description", RM."Area Code" | | RM."Jurisdiction", '') ELSE RD."Property Id" END "Folio ID", 
+                         RM."Plant Department Count" "Total Num Depts", RM."Plant Improvement Count" "Total Num of Imprs", 0 "Annual Depr", NVL(IC."BaseCost", 0) "Total Cost", NVL(IC."CostAdj", 0) "Total Cost Adj", 
+                         NVL(IC."BaseCost", 0) + NVL(IC."CostAdj", 0) "Total Base Cost", NVL(((NVL(IC."BaseCost", 0) + NVL(IC."CostAdj", 0)) * NVL((IC."Plupdfact" / 100), 1)), 0) "Total Updated Cost", NVL((RI."Idcfact" / 100), 1) "IDC Factor", 
+                         NVL(((NVL(IC."BaseCost", 0) + NVL(IC."CostAdj", 0)) * NVL((IC."IdcFact" / 100), 1) * NVL(CASE WHEN RI."Exclude Idc Factor" = 'Y' THEN 1 ELSE NVL((IC."IdcFact" / 100), 1) END, 1)), 0) "Total RCN", 
+                         NVL("Averge Depreciation", 0) "Avg Depr Rate", NVL(((NVL(IC."BaseCost", 0) + NVL(IC."CostAdj", 0)) * NVL((IC."IdcFact" / 100), 1) * NVL(CASE WHEN RI."Exclude Idc Factor" = 'Y' THEN 1 ELSE NVL((IC."IdcFact" / 100),
+                          1) END, 1)), 0) - NVL(((NVL(IC."BaseCost", 0) + NVL(IC."CostAdj", 0)) * NVL((IC."IdcFact" / 100), 1) * NVL(CASE WHEN RI."Exclude Idc Factor" = 'Y' THEN 1 ELSE NVL((IC."IdcFact" / 100), 1) END, 1)), 1) 
+                         * (NVL("Averge Depreciation", 0) / 100) "Total RCNLD"
+FROM            BCA_COMMON.REGMAST_VW RM INNER JOIN
+                         BCA_COMMON.REGDEPT_VW RD ON RM."Reg. ID" = RD."Regulated Entity Id" AND RM."Roll Year" = RD."Roll Year" INNER JOIN
+                         BCA_COMMON.REGIMP_VW RI ON RI."Department Id" = RD."Department Id" AND RI."Roll Year" = RD."Roll Year" INNER JOIN
+                             (SELECT        RI2."Regulated Entity Id", RI2."Roll Year", RI2."Department Id", COUNT(*) "CNT", SUM(RI2."Base Cost For Plant") "BaseCost", SUM(RI2."COSTADJ") "CostAdj", SUM(RI2."Idcfact") "IdcFact", 
+                                                         SUM(RI2."Plupdfact") "Plupdfact", SUM(RI2."Adjusted RCNLD") "Rcnld Adjusted Value", SUM(RI2."Override RCNLD ") "Rcnld Override Value", SUM(RI2."Depreciation") "Depreciation", 
+                                                         SUM(RI2."Functional Depreciation") "Functional Depreciation", SUM(RI2."Observed Depreciation") "Observed Depreciation", SUM(RI2."Economic Depreciation") "Economic Depreciation", 
+                                                         AVG("Depreciation") "Averge Depreciation"
+                               FROM            BCA_COMMON.REGIMP_VW RI2
+                               GROUP BY RI2."Regulated Entity Id", RI2."Roll Year", RI2."Department Id") IC ON IC."Regulated Entity Id" = RD."Regulated Entity Id" AND IC."Roll Year" = RD."Roll Year" INNER JOIN
+                             (SELECT        "Code", "Description"
+                               FROM            BCA_COMMON.AEDIT_VW
+                               WHERE        "Field Name" = 'PLCATEGORY'
+                               UNION
+                               SELECT        "Code 1", "Description"
+                               FROM            BCA_COMMON.DEDIT_VW
+                               WHERE        "Field Name 1" = 'PLCATEGORY') PC ON PC."Code" = RM."Plant Category"
+WHERE        RM."Roll Year" = :RollYear AND RM."Reg. ID" = :RegId</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
         <Field Name="Reg__Id">
-          <DataField>Reg. Id</DataField>
+          <DataField>Reg. ID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Area_Code">
           <DataField>Area Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Municipality">
-          <DataField>Municipality</DataField>
+        <Field Name="Jurisdiction">
+          <DataField>Jurisdiction</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Alt__Id">
-          <DataField>Alt. Id</DataField>
+        <Field Name="Alternate_Id">
+          <DataField>Alternate Id</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Plant_Facility_Name">
@@ -155,36 +77,76 @@ WHERE RM."Roll Year" = :RollYear
           <DataField>Plant Category/Facility Type</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Department__">
-          <DataField>Department #</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="Department_Id">
+          <DataField>Department Id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Reg__Descr">
-          <DataField>Reg. Descr</DataField>
+        <Field Name="Dept_Description">
+          <DataField>Dept Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Plant_Primary_Div">
+          <DataField>Plant Primary Div</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Folio_ID">
           <DataField>Folio ID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ID__Improvements">
-          <DataField># Improvements</DataField>
+        <Field Name="Plant_Capacity_Units">
+          <DataField>Plant Capacity Units</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Base_Cost">
-          <DataField>Base Cost</DataField>
+        <Field Name="Plant_Capacity_Code">
+          <DataField>Plant Capacity Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Plant_Closure_Yr">
+          <DataField>Plant Closure Yr</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Updated_Cost">
-          <DataField>Updated Cost</DataField>
+        <Field Name="Total_Num_Depts">
+          <DataField>Total Num Depts</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="RCN">
-          <DataField>RCN</DataField>
+        <Field Name="Total_Num_of_Imprs">
+          <DataField>Total Num of Imprs</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="RCNLD">
-          <DataField>RCNLD</DataField>
+        <Field Name="Annual_Depr">
+          <DataField>Annual Depr</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Total_Cost">
+          <DataField>Total Cost</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Total_Cost_Adj">
+          <DataField>Total Cost Adj</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Total_Base_Cost">
+          <DataField>Total Base Cost</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Total_Updated_Cost">
+          <DataField>Total Updated Cost</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="IDC_Factor">
+          <DataField>IDC Factor</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Total_RCN">
+          <DataField>Total RCN</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Avg_Depr_Rate">
+          <DataField>Avg Depr Rate</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Total_RCNLD">
+          <DataField>Total RCNLD</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -198,30 +160,33 @@ WHERE RM."Roll Year" = :RollYear
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.71172in</Width>
+                  <Width>0.69479in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.23854in</Width>
+                  <Width>0.69687in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.81771in</Width>
+                  <Width>1.08854in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.01563in</Width>
+                  <Width>1.4616in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.25521in</Width>
+                  <Width>1.52951in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.01563in</Width>
+                  <Width>1.30452in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.98438in</Width>
+                  <Width>1.35834in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.89583in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.21in</Height>
+                  <Height>0.36625in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -232,14 +197,17 @@ WHERE RM."Roll Year" = :RollYear
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Reg Description</Value>
+                                  <Value>Folio #
+Depts</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox20</rd:DefaultName>
@@ -266,14 +234,17 @@ WHERE RM."Roll Year" = :RollYear
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Folio ID</Value>
+                                  <Value>Folio #
+Imps</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox22</rd:DefaultName>
@@ -300,7 +271,7 @@ WHERE RM."Roll Year" = :RollYear
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Dept # Imps</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -309,7 +280,22 @@ WHERE RM."Roll Year" = :RollYear
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Folio Cost</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -337,7 +323,7 @@ WHERE RM."Roll Year" = :RollYear
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Dept Base Cost</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -346,7 +332,22 @@ WHERE RM."Roll Year" = :RollYear
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Folio Cost Adj</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -374,7 +375,7 @@ WHERE RM."Roll Year" = :RollYear
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Dept Updated Cost</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -383,7 +384,22 @@ WHERE RM."Roll Year" = :RollYear
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Folio Base Cost</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -411,7 +427,8 @@ WHERE RM."Roll Year" = :RollYear
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Dept RCN</Value>
+                                  <Value>Folio Updated
+Cost</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -420,7 +437,7 @@ WHERE RM."Roll Year" = :RollYear
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -448,7 +465,7 @@ WHERE RM."Roll Year" = :RollYear
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Dept RCNLD</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -460,9 +477,73 @@ WHERE RM."Roll Year" = :RollYear
                                 <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Folio RCN</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox32</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox54">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Folio RCNLD</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox54</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -483,88 +564,15 @@ WHERE RM."Roll Year" = :RollYear
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Reg__Descr">
+                        <Textbox Name="Total_Num_Depts">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Reg__Descr.Value</Value>
+                                  <Value>=Fields!Total_Num_Depts.Value</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Reg__Descr</rd:DefaultName>
-                          <RepeatWith>TablixSection2</RepeatWith>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <TopBorder>
-                              <Color>Black</Color>
-                            </TopBorder>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Folio_ID">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Area_Code.Value + "-" + Fields!Municipality.Value + "-" + Fields!Folio_ID.Value</Value>
-                                  <Style>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Folio_ID</rd:DefaultName>
-                          <RepeatWith>TablixSection2</RepeatWith>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <TopBorder>
-                              <Color>Black</Color>
-                            </TopBorder>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="ID__Improvements">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!ID__Improvements.Value</Value>
-                                  <Style>
-                                    <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -574,7 +582,7 @@ WHERE RM."Roll Year" = :RollYear
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ID__Improvements</rd:DefaultName>
+                          <rd:DefaultName>Total_Num_Depts</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
                           <Style>
                             <Border>
@@ -594,14 +602,52 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Base_Cost">
+                        <Textbox Name="Total_Num_of_Imprs">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Base_Cost.Value</Value>
+                                  <Value>=Fields!Total_Num_of_Imprs.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Total_Num_of_Imprs</rd:DefaultName>
+                          <RepeatWith>TablixSection2</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Color>Black</Color>
+                            </TopBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Total_Cost">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!Total_Cost.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -614,7 +660,7 @@ WHERE RM."Roll Year" = :RollYear
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Base_Cost</rd:DefaultName>
+                          <rd:DefaultName>Total_Cost</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
                           <Style>
                             <Border>
@@ -634,14 +680,14 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Updated_Cost">
+                        <Textbox Name="Total_Cost_Adj">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Updated_Cost.Value</Value>
+                                  <Value>=Sum(Fields!Total_Cost_Adj.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -654,7 +700,7 @@ WHERE RM."Roll Year" = :RollYear
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Updated_Cost</rd:DefaultName>
+                          <rd:DefaultName>Total_Cost_Adj</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
                           <Style>
                             <Border>
@@ -674,14 +720,14 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="RCN">
+                        <Textbox Name="Total_Updated_Cost1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!RCN.Value</Value>
+                                  <Value>=Sum(Fields!Total_Updated_Cost.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -694,7 +740,7 @@ WHERE RM."Roll Year" = :RollYear
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>RCN</rd:DefaultName>
+                          <rd:DefaultName>Total_Updated_Cost1</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
                           <Style>
                             <Border>
@@ -714,14 +760,14 @@ WHERE RM."Roll Year" = :RollYear
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="RCNLD">
+                        <Textbox Name="Total_Updated_Cost">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!RCNLD.Value</Value>
+                                  <Value>=Sum(Fields!Total_Updated_Cost.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -734,8 +780,87 @@ WHERE RM."Roll Year" = :RollYear
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>RCNLD</rd:DefaultName>
+                          <rd:DefaultName>Total_Updated_Cost</rd:DefaultName>
                           <RepeatWith>TablixSection2</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Color>Black</Color>
+                            </TopBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Total_RCN">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!Total_RCN.Value)</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <Format>C0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Total_RCN</rd:DefaultName>
+                          <RepeatWith>TablixSection2</RepeatWith>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Color>Black</Color>
+                            </TopBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Total_RCNLD">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!Total_RCNLD.Value)</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <Format>C0</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Total_RCNLD</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -759,26 +884,65 @@ WHERE RM."Roll Year" = :RollYear
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Subreport Name="Subreport3">
-                          <ReportName>AdVal Department Sub1</ReportName>
+                        <Subreport Name="Subreport1">
+                          <ReportName>PlantFacilitySummary Sub1</ReportName>
                           <Parameters>
                             <Parameter Name="RollYear">
                               <Value>=Parameters!TAXYR.Value</Value>
                             </Parameter>
                             <Parameter Name="RegId">
-                              <Value>=Parameters!REGID.Value</Value>
-                            </Parameter>
-                            <Parameter Name="DeptId">
-                              <Value>=Fields!Department__.Value</Value>
+                              <Value>=Fields!Reg__Id.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <KeepTogether>true</KeepTogether>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
                           </Style>
                         </Subreport>
+                        <ColSpan>8</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox107">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox107</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                         <ColSpan>7</ColSpan>
                       </CellContents>
                     </TablixCell>
@@ -788,6 +952,37 @@ WHERE RM."Roll Year" = :RollYear
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox56">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox56</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
@@ -801,13 +996,14 @@ WHERE RM."Roll Year" = :RollYear
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.47035in</Size>
+                    <Size>1.47917in</Size>
                     <CellContents>
                       <Textbox Name="Textbox63">
                         <CanGrow>true</CanGrow>
@@ -816,7 +1012,21 @@ WHERE RM."Roll Year" = :RollYear
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Dept # </Value>
+                                <Value />
+                                <Style>
+                                  <FontSize>9pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>Folio ID</Value>
                                 <Style>
                                   <FontSize>9pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
@@ -859,16 +1069,24 @@ WHERE RM."Roll Year" = :RollYear
                 <TablixMember>
                   <Group Name="Department__">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Department__.Value</GroupExpression>
+                      <GroupExpression>=Fields!Area_Code.Value</GroupExpression>
+                      <GroupExpression>=Fields!Jurisdiction.Value</GroupExpression>
+                      <GroupExpression>=Fields!Folio_ID.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!Department__.Value</Value>
+                      <Value>=Fields!Area_Code.Value</Value>
+                    </SortExpression>
+                    <SortExpression>
+                      <Value>=Fields!Jurisdiction.Value</Value>
+                    </SortExpression>
+                    <SortExpression>
+                      <Value>=Fields!Folio_ID.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.47035in</Size>
+                    <Size>1.47917in</Size>
                     <CellContents>
                       <Textbox Name="Department__">
                         <CanGrow>true</CanGrow>
@@ -877,14 +1095,14 @@ WHERE RM."Roll Year" = :RollYear
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!Department__.Value</Value>
+                                <Value>=Fields!Area_Code.Value + "-" + Fields!Jurisdiction.Value + "-" + Fields!Folio_ID.Value</Value>
                                 <Style>
                                   <FontSize>9pt</FontSize>
                                 </Style>
                               </TextRun>
                             </TextRuns>
                             <Style>
-                              <TextAlign>Center</TextAlign>
+                              <TextAlign>Left</TextAlign>
                             </Style>
                           </Paragraph>
                         </Paragraphs>
@@ -907,9 +1125,15 @@ WHERE RM."Roll Year" = :RollYear
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
                     <TablixMember>
-                      <Group Name="Details" />
                       <Visibility>
                         <ToggleItem>Department__</ToggleItem>
+                      </Visibility>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
+                      <Group Name="Details" />
+                      <Visibility>
+                        <Hidden>true</Hidden>
                       </Visibility>
                     </TablixMember>
                   </TablixMembers>
@@ -923,7 +1147,7 @@ WHERE RM."Roll Year" = :RollYear
             <KeepTogether>true</KeepTogether>
             <DataSetName>qryData</DataSetName>
             <Top>0.03417in</Top>
-            <Height>0.71in</Height>
+            <Height>1.11625in</Height>
             <Width>10.50917in</Width>
             <Style>
               <Border>
@@ -932,13 +1156,13 @@ WHERE RM."Roll Year" = :RollYear
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.78417in</Height>
+        <Height>1.15042in</Height>
         <Style />
       </Body>
-      <Width>10.50917in</Width>
+      <Width>10.54042in</Width>
       <Page>
         <PageHeader>
-          <Height>0.89167in</Height>
+          <Height>4.30083in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1016,9 +1240,9 @@ WHERE RM."Roll Year" = :RollYear
                     <TextRun>
                       <Value>=First(Fields!Area_Code.Value, "qryData")
 + "-"
-+ First(Fields!Municipality.Value, "qryData")
++ First(Fields!Jurisdiction.Value, "qryData")
 + "-"
-+ First(Fields!Alt__Id.Value, "qryData")</Value>
++ First(Fields!Alternate_Id.Value, "qryData")</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>
@@ -1175,6 +1399,1002 @@ First(Fields!Plant_Category_Facility_Type.Value, "qryData"))</Value>
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Rectangle Name="Rectangle1">
+              <ReportItems>
+                <Textbox Name="Textbox1">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Plant Primary Div</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.07361in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox18">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total # Imps</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.27361in</Top>
+                  <Left>4.68311in</Left>
+                  <Height>0.2in</Height>
+                  <Width>0.75in</Width>
+                  <ZIndex>1</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox19">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total # Depts</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.07361in</Top>
+                  <Left>4.68311in</Left>
+                  <Height>0.2in</Height>
+                  <Width>0.75in</Width>
+                  <ZIndex>2</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox23">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total RCNLD</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>2.92188in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>3</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox25">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Avg Depr Rate</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>2.55313in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>4</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox27">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total RCN</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>2.21771in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>5</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox29">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>IDC Factor</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.98021in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>6</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox31">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total Updated Cost</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.78021in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>7</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox33">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total Base Cost</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.47187in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>8</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox34">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total Cost Adj</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.22187in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>9</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox35">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Total Cost</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.02187in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>10</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox36">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Plant Closure Yr</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.67361in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>11</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox37">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Plant Capacity Code</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.47361in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>12</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox38">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Plant Capacity Units</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.27361in</Top>
+                  <Left>0.105in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>13</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox16">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=First(Fields!Plant_Primary_Div.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.0717in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>2.875in</Width>
+                  <ZIndex>14</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox39">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_RCNLD.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                            <Format>C0</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>2.91997in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>15</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox40">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Avg_Depr_Rate.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <Format>P2</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>2.55122in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>16</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox41">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_RCN.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                            <Format>C0</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>2.2158in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>17</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox42">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!IDC_Factor.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <Format>N4</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.9783in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>18</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox43">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_Updated_Cost.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <Format>C0</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.7783in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>19</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox44">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_Base_Cost.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                            <Format>C0</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.46996in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>20</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox45">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_Cost_Adj.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <Format>C0</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.21996in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>21</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox46">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_Cost.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                            <Format>C0</Format>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>1.01996in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>22</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox47">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Plant_Closure_Yr.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.6717in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1.125in</Width>
+                  <ZIndex>23</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox48">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=First(Fields!Plant_Capacity_Code.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.4717in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>2.875in</Width>
+                  <ZIndex>24</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox49">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Plant_Capacity_Units.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.2717in</Top>
+                  <Left>1.30521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>2.875in</Width>
+                  <ZIndex>25</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox21">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_Num_of_Imprs.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.27083in</Top>
+                  <Left>5.50521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1in</Width>
+                  <ZIndex>26</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox50">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Sum(Fields!Total_Num_Depts.Value, "qryData")</Value>
+                          <Style>
+                            <FontFamily>Arial</FontFamily>
+                            <FontSize>8pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Right</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox1</rd:DefaultName>
+                  <Top>0.07083in</Top>
+                  <Left>5.50521in</Left>
+                  <Height>0.2in</Height>
+                  <Width>1in</Width>
+                  <ZIndex>27</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Line Name="Line2">
+                  <Top>1.44792in</Top>
+                  <Left>1.28208in</Left>
+                  <Height>0in</Height>
+                  <Width>1.25in</Width>
+                  <ZIndex>28</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                </Line>
+                <Line Name="Line3">
+                  <Top>2.20729in</Top>
+                  <Left>1.29271in</Left>
+                  <Height>0in</Height>
+                  <Width>1.25in</Width>
+                  <ZIndex>29</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                </Line>
+              </ReportItems>
+              <KeepTogether>true</KeepTogether>
+              <Top>0.9675in</Top>
+              <Left>0.05in</Left>
+              <Height>3.23958in</Height>
+              <Width>6.58542in</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Rectangle>
           </ReportItems>
           <Style>
             <Border>
@@ -1555,7 +2775,7 @@ that it is current or accurate, and provides it for your convenience only. Use o
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>0000020699</Value>
+          <Value>0000077518</Value>
         </Values>
       </DefaultValue>
       <Prompt>REGID</Prompt>
